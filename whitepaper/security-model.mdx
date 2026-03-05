@@ -1,0 +1,352 @@
+---
+title: "Security Model"
+description: "Threat model, adversaries, and security mitigations"
+---
+
+## Assumptions & Adversaries
+
+### Network Assumptions
+
+<Info>
+**Core Infrastructure Assumptions:**
+
+- **Network liveness on Base** (Solana planned): Assumes Base L2 remains operational with reasonable finality times
+- **Oracle availability**: Pricing oracles remain accessible with acceptable latency
+- **Honest-majority not required** for fiat rails: Protocol security doesn't depend on honest majority assumptions for off-chain payment rails
+</Info>
+
+The protocol is designed to function under realistic adversarial conditions without requiring overly optimistic trust assumptions.
+
+### Adversary Types
+
+The protocol anticipates and mitigates various adversarial actors:
+
+<CardGroup cols={2}>
+  <Card title="Chargeback Fraudsters" icon="credit-card">
+    Users who make legitimate-appearing payments via reversible rails, then initiate chargebacks after receiving crypto.
+    
+    **Mitigation:** Rail risk classification, extended dispute windows, higher bonds for risky rails
+  </Card>
+  
+  <Card title="Proof Forgers" icon="file-shield">
+    Attackers attempting to forge ZK-KYC proofs or fabricate payment evidence.
+    
+    **Mitigation:** Cryptographic verification, multiple verifier types, on-chain attestation validation
+  </Card>
+  
+  <Card title="Oracle Manipulators" icon="chart-line">
+    Adversaries seeking to manipulate price feeds for profitable trades.
+    
+    **Mitigation:** Multi-source aggregation, median calculation, deviation guards, circuit breakers
+  </Card>
+  
+  <Card title="Griefers" icon="user-slash">
+    Malicious actors filing false disputes or disrupting protocol operations.
+    
+    **Mitigation:** Dispute bonds, reputation penalties, escalating sanctions, eventual bans
+  </Card>
+  
+  <Card title="Sybil Attackers" icon="users">
+    Adversaries creating multiple identities to game reputation or exploit limits.
+    
+    **Mitigation:** ZK-KYC uniqueness checks, diminishing returns, pattern detection, device fingerprinting
+  </Card>
+  
+  <Card title="Merchant Collusion" icon="handshake">
+    Groups of merchants coordinating to manipulate markets or extract rents.
+    
+    **Mitigation:** Protocol-level pricing, transparent matching, merchant concentration limits
+  </Card>
+</CardGroup>
+
+## Mitigations
+
+### On-Chain Security Measures
+
+<Accordion title="Bonds & Slashing">
+**Mechanism:**
+- Users and merchants post bonds before trades
+- Bonds locked during order lifecycle
+- Slashed for fraudulent behavior or failures
+- Returned on successful completion
+
+**Implementation:**
+- Bond amounts scale with order size and reputation
+- Multi-tier slashing based on violation severity
+- Automated slashing via smart contract logic
+- Appeal mechanism for disputed slashing
+
+**Security Properties:**
+- Economic disincentive for fraud
+- Compensation pool for victims
+- Skin-in-the-game alignment
+</Accordion>
+
+<Accordion title="Rail-Class Windows">
+**Mechanism:**
+- Different payment rails assigned risk classes
+- Time windows adjusted based on risk
+- Higher-risk rails require longer settlement and dispute periods
+
+**Examples:**
+- UPI (low-risk): 1-hour dispute window
+- SEPA (medium-risk): 6-hour dispute window
+- Credit card (high-risk): 48-hour dispute window
+
+**Security Properties:**
+- Time for chargeback detection
+- Appropriate risk-adjusted protection
+- Flexible response to rail characteristics
+</Accordion>
+
+<Accordion title="Proof Verification Requirements">
+**Mechanism:**
+- All ZK proofs verified on-chain or by trusted verifiers
+- Multiple verification methods required for higher limits
+- Proof freshness requirements prevent replay
+- Verifier diversity prevents single-point compromise
+
+**Implementation:**
+- On-chain verifier registry
+- Proof expiry timestamps
+- Nonce-based replay protection
+- Verifier rotation and sunsetting
+
+**Security Properties:**
+- Cryptographic identity assurance
+- Resistance to forgery
+- Defense in depth through multiple verifiers
+</Accordion>
+
+<Accordion title="Oracle Deviation Guards">
+**Mechanism:**
+- Continuous monitoring of price source deviations
+- Automatic rejection of outlier sources
+- Circuit breakers trigger on excessive deviation
+- TWAP smoothing prevents flash manipulation
+
+**Parameters:**
+- Normal operation: ±2% deviation allowed
+- Warning level: 3.5% deviation
+- Circuit breaker: 5% deviation
+- Recovery requires governance approval
+
+**Security Properties:**
+- Protection against price manipulation
+- Graceful degradation under attack
+- User protection during market anomalies
+</Accordion>
+
+<Accordion title="Rate/Limit Throttles">
+**Mechanism:**
+- Per-user transaction limits based on reputation
+- Velocity limits prevent rapid fund movement
+- Cooldown periods between large transactions
+- Suspicious pattern detection triggers reviews
+
+**Enforcement:**
+- Smart contract enforcement
+- Real-time monitoring
+- Automatic temporary restrictions
+- Manual review for pattern violations
+
+**Security Properties:**
+- AML compliance through design
+- Fraud limitation
+- Sybil resistance
+- Time for anomaly detection
+</Accordion>
+
+## Audits & Bounty
+
+<Warning>
+**Security Assurance Programs:**
+
+Core contracts, verifiers, and circuits will undergo independent audits; a public bounty program will operate pre- and post-TGE.
+</Warning>
+
+### Audit Strategy
+
+**Pre-Launch Audits:**
+- Multiple independent audit firms
+- Smart contract security specialists
+- Cryptographic circuit review
+- Economic mechanism analysis
+
+**Audit Scope:**
+- Base L2 contracts (order lifecycle, matching, settlement)
+- Reputation registry and scoring logic
+- Oracle adapters and price aggregation
+- ZK-KYC verifier integrations
+- Governance and upgrade mechanisms
+
+**Continuous Audits:**
+- Re-audit after major upgrades
+- Periodic security reviews
+- Incident response retainer with audit firms
+
+### Bug Bounty Program
+
+<Info>
+**Bounty Structure:**
+
+**Critical (Protocol-Breaking):**
+- Fund theft or loss
+- Oracle manipulation enabling profit
+- Reputation system bypass
+- **Reward:** $100,000 - $500,000
+
+**High (Significant Impact):**
+- Fraud mechanism not caught by safeguards
+- Privacy leak of PII
+- Dispute resolution bypass
+- **Reward:** $25,000 - $100,000
+
+**Medium (Moderate Impact):**
+- Gas optimization exploits
+- Front-running vulnerabilities
+- Denial of service vectors
+- **Reward:** $5,000 - $25,000
+
+**Low (Minor Impact):**
+- UI/UX exploits
+- Information disclosure (non-PII)
+- Edge case handling issues
+- **Reward:** $1,000 - $5,000
+</Info>
+
+### Responsible Disclosure
+
+**Process:**
+1. Report via secure channel (security@p2p.me)
+2. Acknowledgment within 24 hours
+3. Initial assessment within 72 hours
+4. Fix development and deployment
+5. Public disclosure (coordinated timing)
+6. Bounty payment
+
+**Commitments:**
+- No legal action against good-faith researchers
+- Prompt response and resolution
+- Public credit (unless anonymity requested)
+- Fair bounty assessment by independent panel
+
+## Attack Scenarios & Responses
+
+### Scenario 1: Oracle Manipulation
+
+<Accordion title="Attack Vector">
+**Attacker's Goal:** Manipulate price feeds to execute trades at unfavorable rates.
+
+**Method:**
+1. Compromise or manipulate a subset of oracle sources
+2. Create artificial price spike or crash
+3. Execute large orders at manipulated price
+4. Profit from price difference
+</Accordion>
+
+<Accordion title="Defense Layers">
+1. **Multi-source aggregation:** Requires compromising majority of sources
+2. **Median calculation:** Resistant to outlier manipulation
+3. **Deviation monitoring:** Triggers circuit breaker at 5% deviation
+4. **TWAP smoothing:** Prevents flash manipulation
+5. **Quote expiry:** Limits exposure window to 60 seconds
+6. **Post-trade monitoring:** Suspicious trades reviewed
+</Accordion>
+
+<Accordion title="Response">
+- Automatic circuit breaker halts trading
+- Compromised sources identified and removed
+- Affected trades reviewed for reversal
+- Oracle provider notified and replaced if necessary
+- Post-mortem published and safeguards updated
+</Accordion>
+
+### Scenario 2: Reputation Farming
+
+<Accordion title="Attack Vector">
+**Attacker's Goal:** Artificially inflate reputation to access higher limits, then commit fraud.
+
+**Method:**
+1. Create multiple accounts or use legitimate account
+2. Execute many small legitimate trades
+3. Build reputation over time
+4. Once limits are high, commit large-scale fraud
+5. Disappear with funds
+</Accordion>
+
+<Accordion title="Defense Layers">
+1. **Reputation decay:** Requires continuous activity
+2. **Diminishing returns:** Later trades earn less reputation
+3. **Rail diversity requirement:** Can't farm single method
+4. **Bond scaling:** Higher limits require more capital at risk
+5. **Pattern detection:** Wash trading and artificial activity flagged
+6. **Sybil resistance:** ZK-KYC uniqueness prevents multiple accounts
+</Accordion>
+
+<Accordion title="Response">
+- Suspicious accounts flagged for enhanced monitoring
+- Large withdrawals from newly-high-reputation accounts delayed
+- Fraud detected and prevented before completion
+- Bonds slashed and reputation destroyed
+- Pattern analysis updated to catch similar attempts
+</Accordion>
+
+### Scenario 3: Smart Contract Exploit
+
+<Accordion title="Attack Vector">
+**Attacker's Goal:** Exploit contract vulnerability to steal funds or disrupt operations.
+
+**Method:**
+1. Discover vulnerability in smart contract logic
+2. Craft exploit transaction
+3. Execute to steal funds or break protocol state
+</Accordion>
+
+<Accordion title="Defense Layers">
+1. **Pre-deployment audits:** Professional security review
+2. **Formal verification:** Mathematical proof of key properties
+3. **Bug bounty:** Incentivize discovery before exploitation
+4. **Upgrade controls:** Timelocked upgrades with review period
+5. **Emergency pause:** Admin can pause contracts if exploit detected
+6. **Limited scope:** Modular design limits blast radius
+</Accordion>
+
+<Accordion title="Response">
+- Emergency pause activated immediately
+- Vulnerability analyzed and patch developed
+- Audit firm engaged for emergency review
+- Fix deployed through expedited governance
+- Affected users compensated from insurance pool
+- Public post-mortem and prevention measures
+</Accordion>
+
+## Security Roadmap
+
+### Near-Term (0-6 months)
+
+- Complete comprehensive smart contract audit
+- Launch public bug bounty program
+- Implement automated monitoring and alerting
+- Deploy circuit breaker testing regime
+- Establish incident response procedures
+
+### Medium-Term (6-12 months)
+
+- Formal verification of critical contract components
+- Decentralized oracle infrastructure
+- Insurance pool for user protection
+- Advanced fraud detection ML models
+- Security operations center (SOC) establishment
+
+### Long-Term (12+ months)
+
+- Fully decentralized security governance
+- Autonomous threat response systems
+- Zero-knowledge proof of solvency
+- Quantum-resistant cryptography migration plan
+- Cross-chain security coordination
+
+<Note>
+Security is an ongoing process, not a destination. The protocol commits to continuous improvement, transparent communication about risks, and rapid response to emerging threats.
+</Note>

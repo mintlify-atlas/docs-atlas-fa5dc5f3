@@ -1,0 +1,64 @@
+---
+title: "Staking Mechanics"
+description: "How Circle Admins, merchants, and delegators participate in staking"
+---
+
+## Staking Roles
+
+The protocol uses a multi-layered staking design that creates skin-in-the-game at every level:
+
+### Circle Admins
+
+**Circle Admins** stake $P2P to operate merchant networks.
+
+- Their stake is **slashable** for misbehavior
+- A portion of their rewards is **locked as an insurance buffer**
+- They earn 8.89% of protocol revenue for their operational work
+
+### Merchants
+
+**Merchants** stake USDC as working capital for order fulfillment.
+
+- Their capacity is **bounded by their stake**
+- Larger stakes enable handling larger orders
+- They earn the majority of revenue (53.33% combined with delegators)
+
+### Delegators
+
+**Delegators** stake $P2P to Circles to earn a share of revenue.
+
+<Info>
+Only delegation to $P2P-denominated Circles grants governance voting rights.
+</Info>
+
+- Earn portion of the 53.33% revenue share
+- Participate in protocol governance through their staked tokens
+- Can delegate to multiple Circles
+
+## Staking Benefits
+
+<CardGroup cols={2}>
+  <Card title="Revenue Sharing" icon="coins">
+    All staking participants earn from protocol transaction fees
+  </Card>
+  
+  <Card title="Governance Rights" icon="vote-yea">
+    Delegators to $P2P Circles get voting power on protocol decisions
+  </Card>
+  
+  <Card title="Network Security" icon="shield">
+    Slashable stakes ensure good behavior from Circle Admins
+  </Card>
+  
+  <Card title="Capacity Scaling" icon="chart-line">
+    Merchant stakes determine their order fulfillment capacity
+  </Card>
+</CardGroup>
+
+## Skin in the Game
+
+The staking design ensures every participant has capital at risk:
+
+- **Circle Admins:** $P2P stake subject to slashing
+- **Merchants:** USDC working capital locked for orders
+- **Delegators:** $P2P staked for revenue share and governance

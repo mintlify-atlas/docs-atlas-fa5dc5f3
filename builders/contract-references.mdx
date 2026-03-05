@@ -1,0 +1,42 @@
+---
+title: "Contract References"
+description: "Core facets, storage contracts, and libraries"
+---
+
+The protocol uses EIP-2535 Diamond Standard. Functionality is split across facets that share storage, enabling modular upgrades without redeploying the full contract.
+
+## Facets
+
+**CountryFacet.sol**
+
+Currency and payment-channel config governance.
+
+**P2pConfigFacet.sol**
+
+Pricing, spread, admin configuration.
+
+**OrderProcessorFacet.sol**
+
+Disputes, limits, thresholds.
+
+**MerchantRegistryFacet.sol and MerchantOnboardFacet.sol**
+
+Merchant controls, fees, stake/unstake.
+
+**OrderFlowFacet.sol and OrderFlowHelper.sol**
+
+Order lifecycle, matching, settlement.
+
+**ReputationManager.sol**
+
+RP hooks, reward/verification gating.
+
+## Storage Contracts
+
+- `storages/MerchantRegistryStorage.sol`
+- `storages/CountryStorage.sol`
+- `storages/OrderProcessorStorage.sol`
+
+## Libraries
+
+- `libraries/MerchantRegistryLib.sol`

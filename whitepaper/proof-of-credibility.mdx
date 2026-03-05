@@ -1,0 +1,178 @@
+---
+title: "Proof-of-Credibility (Reputation & Matching)"
+description: "On-chain reputation system preventing fraud and enabling trust"
+---
+
+P2P Protocol works using a unique on-chain reputation system which not only builds up user trust and privileges but actively helps prevent fraudulent activity within the P2P landscape.
+
+## Building Trust Through Reputation
+
+A user can increase their Reputation Points (RP) score via a series of on-chain tasks which make them more trustworthy in the eyes of the community. From completing anonymous KYC to referring friends, each newly completed task reinforces the user's on-chain reputation while unlocking fresh rights and benefits along with upgraded transaction limits.
+
+<Info>
+**Reputation Building:**
+
+Users earn reputation through:
+- Completing successful trades
+- Maintaining clean dispute histories
+- Achieving ZK-KYC verification tiers
+- Building transaction diversity across rails and geographies
+- Receiving referral attestations from established users
+</Info>
+
+## Inputs (illustrative, governed)
+
+The Proof-of-Credibility system considers multiple factors:
+
+### Trade History
+- **Successful trades** (size-weighted)
+- **Trade frequency** and consistency
+- **Time since account creation** (age/decay)
+- **Dispute history** and resolution outcomes
+
+### Identity and Verification
+- **KYC proof tier** (ZK-KYC completed, source diversity)
+- **Verification method diversity** (government ID + social accounts + passport)
+- **Verification freshness**
+
+### Network Participation
+- **Rail diversity** & geography
+- **Referral attestations** from trusted users
+- **Community standing**
+
+### Negative Events
+- **Slashed events** (negative deltas)
+- **Dispute losses**
+- **Appeal outcomes**
+- **Timeout violations**
+
+## Outputs
+
+The reputation score determines:
+
+<CardGroup cols={2}>
+  <Card title="Transaction Limits" icon="scale-balanced">
+    Order limits (min/max) scale with reputation. New users start with small limits that grow as they build credibility.
+  </Card>
+  
+  <Card title="Fee Tiers" icon="percentage">
+    Higher reputation users access preferential fee structures as a reward for consistent, honest behavior.
+  </Card>
+  
+  <Card title="Bond Multipliers" icon="shield-halved">
+    Trusted users may post lower bonds or skip bonds entirely, reducing capital requirements.
+  </Card>
+  
+  <Card title="Matching Priority" icon="arrow-up-right-dots">
+    Merchants with higher reputation receive priority in order matching, increasing their transaction volume.
+  </Card>
+</CardGroup>
+
+### Regional Caps
+
+<Note>
+Regional caps by compliance policy may override individual reputation limits to ensure adherence to local regulations.
+</Note>
+
+## Sybil & Gaming Resistance
+
+The protocol employs multiple mechanisms to prevent gaming:
+
+### Weighted Decay
+
+Reputation scores decay over time if not maintained through continued activity. This prevents users from building reputation once and then engaging in fraud later.
+
+```
+RP(t) = RP(0) * e^(-λt) + Σ(new_contributions)
+```
+
+Where:
+- `RP(t)` is reputation at time t
+- `λ` is the decay constant (governance parameter)
+- New contributions continuously refresh the score
+
+### Diminishing Returns
+
+Repeating the same action yields progressively smaller reputation gains, encouraging diverse participation rather than grinding a single activity.
+
+### Rail-Mix Requirements
+
+Higher reputation tiers require demonstrated competence across multiple payment rails and geographic regions, making it harder to game the system through a single method.
+
+### Anti-Gaming Detection
+
+<Warning>
+The protocol includes automated detection for:
+- Wash trading between related accounts
+- Artificial inflation through circular transactions
+- Coordinated behavior suggesting Sybil attacks
+- Suspicious patterns in timing or amounts
+</Warning>
+
+### Optional Attested Device/Account Fingerprints
+
+Privacy-respecting commitments to device or account fingerprints can help identify coordinated Sybil attacks without exposing user identity.
+
+## Reputation Calculation Example
+
+<Accordion title="New User (Week 1)">
+**Starting State:**
+- 1 ZK-KYC verification (social account): +50 RP
+- 3 successful trades ($100, $150, $200): +45 RP
+- No disputes: +0 RP
+- **Total: 95 RP**
+
+**Unlocks:**
+- Max transaction: $500
+- Standard fees: 0.5%
+- Bond requirement: 2x trade value
+</Accordion>
+
+<Accordion title="Established User (Month 3)">
+**Current State:**
+- 3 ZK-KYC verifications (ID + social + passport): +200 RP
+- 87 successful trades (average $300): +435 RP
+- 2 disputes filed (both won): +20 RP
+- 5 successful referrals: +50 RP
+- 3 payment rails used: +30 RP
+- Decay factor: -35 RP
+- **Total: 700 RP**
+
+**Unlocks:**
+- Max transaction: $5,000
+- Preferred fees: 0.3%
+- Bond requirement: 1x trade value
+- Matching priority: High
+</Accordion>
+
+<Accordion title="Trusted Merchant (Year 1)">
+**Current State:**
+- Full KYC verification: +300 RP
+- 2,400+ successful trades: +2,400 RP
+- 0.1% dispute rate (24 disputes, 22 won): -20 RP
+- 50+ referrals: +250 RP
+- 8 payment rails, 15 countries: +200 RP
+- Staked merchant bond: +500 RP
+- Decay factor: -130 RP
+- **Total: 3,500 RP**
+
+**Unlocks:**
+- Max transaction: $50,000
+- Premium fees: 0.15%
+- No bond requirement
+- Matching priority: Maximum
+- Eligible for LP incentives
+</Accordion>
+
+## Reputation Portability
+
+One of the most powerful features of on-chain reputation:
+
+- **Cross-client portability:** Your reputation follows you across all clients (Coins.me, p2p.me, third-party integrations)
+- **Cross-border recognition:** Reputation earned in one region is recognized globally
+- **Composability:** Future protocols can build on the same credibility graph
+- **No vendor lock-in:** You own your reputation through your wallet, not through any platform
+
+<Info>
+Reputation is stored as on-chain commitments tied to wallet addresses. As long as you control your private keys, you control your reputation—it can never be taken away or siloed by a platform.
+</Info>

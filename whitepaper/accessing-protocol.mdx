@@ -1,0 +1,497 @@
+---
+title: "Accessing P2P Protocol: Clients & SDKs"
+description: "Client applications, SDKs, and integration options"
+---
+
+## Clients and Ease of Use
+
+The primary clients for accessing P2P Protocol are the p2p.me and coins.me Progressive Web Apps (PWAs). These browser-based applications provide seamless access across devices with integrated wallet functionality powered by thirdweb.
+
+<Info>
+**Getting Started:**
+
+- **On-ramps:** As simple as buying stablecoins via a fiat transfer
+- **Off-ramps:** Just as reliable through a stablecoin deposit to the in-app wallet
+- **Cross-platform:** Works on desktop, mobile, and tablet browsers
+- **No installation:** Access directly through web browser
+- **Integrated wallets:** Built-in wallet functionality, no external wallet required
+</Info>
+
+Of course, these PWAs are not the only way to access P2P Protocol. Any entity can create and distribute a functional UI client for the Protocol to conduct fully decentralized on/off-ramp transactions.
+
+### p2p.me
+
+The primary reference implementation of the P2P Protocol client:
+
+**Features:**
+- Full protocol functionality
+- Order creation and management
+- Reputation dashboard
+- Transaction history
+- Dispute filing and tracking
+- Multi-rail support
+
+**Target Users:**
+- Power users familiar with crypto
+- Merchants and liquidity providers
+- Developers testing integrations
+- Users who want maximum control
+
+### coins.me
+
+Coins.me is one of the two primary PWAs for accessing P2P Protocol, alongside p2p.me. As a consumer-focused application, it provides a streamlined interface for everyday users. Fees, routing, and features remain protocol-governed to encourage a healthy multi-client ecosystem.
+
+**Features:**
+- Simplified user interface
+- Guided onboarding flow
+- One-tap buy/sell
+- Beginner-friendly design
+- Educational content
+- Customer support integration
+
+**Target Users:**
+- Crypto newcomers
+- Casual users
+- People seeking simplicity
+- Mobile-first users
+
+<Note>
+**Credible Neutrality:**
+
+Both p2p.me and coins.me access the same protocol with the same rules, fees, and functionality. Neither has privileged access or special treatment. This ensures fair competition and user choice.
+</Note>
+
+## Multi-Client Ecosystem
+
+The protocol encourages a diverse client ecosystem:
+
+### Why Multiple Clients Matter
+
+<CardGroup cols={2}>
+  <Card title="User Choice" icon="users">
+    Different users have different needs. Some want simplicity, others want features. Multiple clients serve different preferences.
+  </Card>
+  
+  <Card title="Innovation" icon="lightbulb">
+    Client competition drives UI/UX innovation. Each client can experiment with features while using the same underlying protocol.
+  </Card>
+  
+  <Card title="Decentralization" icon="network-wired">
+    No single client controls access. If one client fails or acts maliciously, users can switch to alternatives.
+  </Card>
+  
+  <Card title="Specialization" icon="bullseye">
+    Clients can specialize for specific use cases: merchants, remittances, B2B, regional markets, etc.
+  </Card>
+</CardGroup>
+
+### Building Your Own Client
+
+Anyone can build a protocol client:
+
+**Requirements:**
+- Use official SDK (see below)
+- Follow protocol rules (enforced by smart contracts)
+- No special permission needed
+- Open source encouraged but not required
+
+**Capabilities:**
+- Full protocol access
+- Custom UI/UX
+- Additional features (analytics, charts, alerts)
+- Integration with other services
+- White-label solutions
+
+<Info>
+**Reference Implementations:**
+
+Both p2p.me and coins.me are open source. Developers can fork them as starting points or learn from the code:
+
+- GitHub: [github.com/p2p-protocol](https://github.com/p2p-protocol)
+- Documentation: Comprehensive guides for client development
+- Community: Discord and forums for developer support
+</Info>
+
+## Client-Side SDKs (B2B Integration)
+
+The P2P Protocol SDK lets developers integrate the protocol to on/off-ramp users directly into their platform. Essentially, the SDKs enable the B2B layer for prospective Web2/Web3 apps and websites to access and integrate P2P Protocol directly into their service, thus enabling consumer micropayments in crypto among other possible use cases.
+
+### SDK Overview
+
+**Supported Platforms:**
+- JavaScript/TypeScript (browser and Node.js)
+- React SDK with hooks
+- React Native for mobile apps
+- Python (coming soon)
+- Go (coming soon)
+
+**Core Functionality:**
+```typescript
+import { P2PProtocol } from '@p2p/sdk';
+
+const p2p = new P2PProtocol({
+  network: 'base',
+  apiKey: 'your-api-key'
+});
+
+// Create a buy order
+const order = await p2p.createOrder({
+  type: 'BUY',
+  amount: 100,
+  currency: 'USD',
+  rail: 'WIRE'
+});
+
+// Monitor order status
+p2p.on('order:matched', (orderId) => {
+  console.log('Order matched:', orderId);
+});
+
+p2p.on('order:completed', (orderId) => {
+  console.log('Order completed:', orderId);
+});
+```
+
+### SDK Features
+
+<Accordion title="Order Management">
+**Capabilities:**
+- Create buy/sell orders
+- Cancel orders
+- Query order status
+- Track order history
+- Handle disputes
+
+**Example:**
+```typescript
+// Create order
+const order = await p2p.orders.create({
+  type: 'BUY',
+  amount: 500,
+  currency: 'INR',
+  rail: 'UPI'
+});
+
+// Get order status
+const status = await p2p.orders.get(order.id);
+
+// List user's orders
+const orders = await p2p.orders.list({
+  status: 'COMPLETED',
+  limit: 10
+});
+```
+</Accordion>
+
+<Accordion title="Reputation Management">
+**Capabilities:**
+- Query user reputation
+- Get transaction limits
+- View reputation breakdown
+- Track reputation changes
+
+**Example:**
+```typescript
+// Get user reputation
+const reputation = await p2p.reputation.get();
+
+console.log('RP Score:', reputation.score);
+console.log('Max Transaction:', reputation.limits.max);
+console.log('Fee Tier:', reputation.feeTier);
+
+// Get reputation history
+const history = await p2p.reputation.history();
+```
+</Accordion>
+
+<Accordion title="Verification">
+**Capabilities:**
+- Initiate ZK-KYC verification
+- Check verification status
+- Get verification requirements
+- Submit proofs
+
+**Example:**
+```typescript
+// Start verification
+const verification = await p2p.verification.start({
+  type: 'GOVERNMENT_ID',
+  tier: 2
+});
+
+// Submit proof
+await p2p.verification.submitProof({
+  verificationId: verification.id,
+  proof: zkProof
+});
+
+// Check status
+const status = await p2p.verification.status(verification.id);
+```
+</Accordion>
+
+<Accordion title="Pricing & Quotes">
+**Capabilities:**
+- Get current prices
+- Request quotes
+- Monitor price changes
+- Access historical prices
+
+**Example:**
+```typescript
+// Get current price
+const price = await p2p.pricing.get('USD', 'USDC');
+
+// Request quote for specific amount
+const quote = await p2p.pricing.quote({
+  from: 'USD',
+  to: 'USDC',
+  amount: 1000,
+  rail: 'WIRE'
+});
+
+console.log('Rate:', quote.rate);
+console.log('Fee:', quote.fee);
+console.log('Total:', quote.total);
+console.log('Expires:', quote.expiresAt);
+```
+</Accordion>
+
+<Accordion title="Webhook Integration">
+**Capabilities:**
+- Receive real-time order updates
+- Get notified of disputes
+- Monitor reputation changes
+- Track payment confirmations
+
+**Example:**
+```typescript
+// Configure webhooks
+await p2p.webhooks.create({
+  url: 'https://yourdomain.com/webhook',
+  events: [
+    'order.matched',
+    'order.completed',
+    'order.disputed',
+    'reputation.updated'
+  ]
+});
+
+// Webhook payload example
+{
+  "event": "order.completed",
+  "orderId": "ord_123abc",
+  "timestamp": "2026-03-05T10:30:00Z",
+  "data": {
+    "amount": 100,
+    "currency": "USD",
+    "status": "SETTLED"
+  }
+}
+```
+</Accordion>
+
+### B2B Use Cases
+
+<CardGroup cols={2}>
+  <Card title="E-Commerce Integration" icon="cart-shopping">
+    Allow customers to pay with crypto, automatically converted from fiat via P2P Protocol at checkout.
+  </Card>
+  
+  <Card title="Remittance Services" icon="money-bill-transfer">
+    Build remittance apps using the protocol for fiat-to-crypto-to-fiat transfers across borders.
+  </Card>
+  
+  <Card title="Payroll Solutions" icon="building">
+    Pay contractors or employees in crypto, they off-ramp to local fiat automatically.
+  </Card>
+  
+  <Card title="Gaming Platforms" icon="gamepad">
+    Enable players to cash out gaming earnings to local currency seamlessly.
+  </Card>
+  
+  <Card title="Marketplace Settlements" icon="store">
+    Settle marketplace vendors in their preferred currency using protocol infrastructure.
+  </Card>
+  
+  <Card title="Subscription Services" icon="rotate">
+    Collect payments in local currencies, receive stablecoins via the protocol.
+  </Card>
+</CardGroup>
+
+### SDK Installation
+
+**NPM:**
+```bash
+npm install @p2p/sdk
+```
+
+**Yarn:**
+```bash
+yarn add @p2p/sdk
+```
+
+**CDN (browser):**
+```html
+<script src="https://cdn.p2p.me/sdk/v1/p2p.min.js"></script>
+```
+
+### Authentication
+
+<Note>
+**API Key Management:**
+
+Developers need API keys for SDK access:
+
+1. Sign up at [developers.p2p.me](https://developers.p2p.me)
+2. Create a project
+3. Generate API keys (separate keys for test/production)
+4. Configure allowed domains for browser usage
+5. Set webhook URLs
+
+**Security:**
+- Never expose API keys in client-side code
+- Use environment variables
+- Rotate keys periodically
+- Revoke compromised keys immediately
+</Note>
+
+### React SDK Example
+
+For React applications, the SDK provides convenient hooks:
+
+```typescript
+import { useP2P, useOrder, useReputation } from '@p2p/react';
+
+function BuyButton() {
+  const { createOrder } = useP2P();
+  const { reputation } = useReputation();
+  
+  const handleBuy = async () => {
+    const order = await createOrder({
+      type: 'BUY',
+      amount: 100,
+      currency: 'USD'
+    });
+    
+    // Navigate to order page
+    router.push(`/orders/${order.id}`);
+  };
+  
+  return (
+    <div>
+      <p>Your limit: ${reputation?.limits.max}</p>
+      <button onClick={handleBuy}>Buy USDC</button>
+    </div>
+  );
+}
+
+function OrderTracker({ orderId }) {
+  const { order, loading } = useOrder(orderId);
+  
+  if (loading) return <Spinner />;
+  
+  return (
+    <div>
+      <h2>Order Status: {order.status}</h2>
+      <p>Amount: {order.amount} {order.currency}</p>
+      <OrderProgress order={order} />
+    </div>
+  );
+}
+```
+
+## Developer Resources
+
+### Documentation
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="book">
+    Complete API documentation with examples for all SDK methods.
+    
+    [developers.p2p.me/api](https://developers.p2p.me/api)
+  </Card>
+  
+  <Card title="Tutorials" icon="graduation-cap">
+    Step-by-step guides for common integration scenarios.
+    
+    [developers.p2p.me/tutorials](https://developers.p2p.me/tutorials)
+  </Card>
+  
+  <Card title="Sample Apps" icon="code">
+    Full sample applications demonstrating SDK usage.
+    
+    [github.com/p2p-protocol/examples](https://github.com/p2p-protocol/examples)
+  </Card>
+  
+  <Card title="SDKs & Tools" icon="toolbox">
+    Download SDKs, CLI tools, and development utilities.
+    
+    [developers.p2p.me/sdks](https://developers.p2p.me/sdks)
+  </Card>
+</CardGroup>
+
+### Developer Support
+
+- **Discord:** Real-time chat with dev community
+- **Forum:** Long-form technical discussions
+- **Office Hours:** Weekly video sessions with protocol engineers
+- **Bug Reports:** GitHub issues for SDK bugs
+- **Feature Requests:** Protocol improvement proposals
+
+### Testnet
+
+<Info>
+**Development Environment:**
+
+Full testnet available for development:
+
+- **Network:** Base Sepolia testnet
+- **Faucet:** Get test USDC and ETH
+- **Mock merchants:** Simulated merchants for testing
+- **Instant settlement:** No real fiat transfers
+- **Reset:** Can reset test account anytime
+
+Access: [testnet.p2p.me](https://testnet.p2p.me)
+</Info>
+
+## Integration Best Practices
+
+<Warning>
+**Production Considerations:**
+
+1. **Error Handling:** Always handle SDK errors gracefully
+2. **Status Polling:** Don't poll too frequently (max once per 5 seconds)
+3. **Webhooks:** Use webhooks instead of polling when possible
+4. **User Experience:** Keep users informed of order status
+5. **Compliance:** Ensure your integration meets local regulations
+6. **Testing:** Thoroughly test on testnet before production
+7. **Monitoring:** Monitor API usage and errors
+8. **Rate Limits:** Respect API rate limits
+</Warning>
+
+### Rate Limits
+
+**API Rate Limits:**
+- Standard: 100 requests/minute
+- Authenticated: 1000 requests/minute
+- Webhook delivery: Best effort, exponential backoff on failures
+
+**Exceeding Limits:**
+- HTTP 429 status code
+- Retry-After header indicates wait time
+- Contact support for higher limits if needed
+
+## White-Label Solutions
+
+For businesses wanting fully branded experiences:
+
+- **Custom UI:** Build your own interface using the SDK
+- **Branded domains:** Use your own domain
+- **Custom branding:** Your logos, colors, messaging
+- **Same protocol:** Access full protocol functionality
+- **Support:** We can assist with integration
+
+<Note>
+Interested in white-label or custom integrations? Contact [partnerships@p2p.me](mailto:partnerships@p2p.me)
+</Note>

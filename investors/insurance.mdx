@@ -1,0 +1,93 @@
+---
+title: "Insurance"
+description: "Three-tier insurance stack for protocol security"
+---
+
+The protocol design includes a three-tier insurance stack to protect against losses and ensure dispute resolution doesn't create externalized costs.
+
+## Insurance Tiers
+
+<Steps>
+  <Step title="CAIP: Circle Admin Insurance Pool">
+    First-line coverage funded by a percentage of Circle volume plus slashed stakes
+  </Step>
+  
+  <Step title="CALR: Circle Admin Locked Rewards">
+    A portion of admin earnings locked in a rolling buffer
+  </Step>
+  
+  <Step title="PIP: Protocol Insurance Pool">
+    Backstop for systemic failures or depleted lower-tier pools
+  </Step>
+</Steps>
+
+## Tier Details
+
+### CAIP (Circle Admin Insurance Pool)
+
+**First-line coverage** for disputes and merchant failures.
+
+**Funding Sources:**
+- Percentage of Circle transaction volume (17.78% of protocol revenue)
+- Slashed stakes from misbehaving Circle Admins
+
+**Purpose:**
+- Cover routine disputes
+- Compensate users for merchant failures
+- First pool accessed for claims
+
+### CALR (Circle Admin Locked Rewards)
+
+**Second-tier buffer** from admin earnings.
+
+**Structure:**
+- Portion of Circle Admin rewards automatically locked
+- Rolling buffer that builds over time
+- Released only if needed for claims
+
+**Purpose:**
+- Additional layer of admin accountability
+- Skin-in-the-game for Circle operators
+- Intermediate coverage before protocol pool
+
+### PIP (Protocol Insurance Pool)
+
+**Systemic backstop** for large-scale failures.
+
+**Characteristics:**
+- Protocol-wide insurance fund
+- Used when lower tiers are depleted
+- Covers systemic failures
+- Last line of defense
+
+## Implementation Status
+
+<Warning>
+The full insurance-pool stack with programmable slash/reward logic and dispute-linked payouts is planned for a future release.
+</Warning>
+
+Current insurance mechanisms are operational but will be expanded with:
+- Programmable slash/reward logic
+- Automated dispute-linked payouts
+- Enhanced multi-tier escalation
+- On-chain insurance pool management
+
+## Design Philosophy
+
+<CardGroup cols={2}>
+  <Card title="Layered Protection" icon="layer-group">
+    Multiple tiers ensure comprehensive coverage
+  </Card>
+  
+  <Card title="Aligned Incentives" icon="handshake">
+    Circle Admins have capital at risk in insurance pools
+  </Card>
+  
+  <Card title="No External Costs" icon="shield-check">
+    Disputes funded by protocol, not externalized to users
+  </Card>
+  
+  <Card title="Systemic Safety" icon="life-ring">
+    Protocol pool protects against catastrophic failures
+  </Card>
+</CardGroup>

@@ -1,0 +1,39 @@
+---
+title: "Order Assignment"
+description: "How orders are assigned to eligible merchants"
+---
+
+Order assignment is constrained by merchant and payment-channel checks.
+
+## Assignment Criteria
+
+Merchants must pass all of the following checks to be eligible for order assignment:
+
+<CardGroup cols={2}>
+  <Card title="Online/offline state" icon="power-off">
+    Merchant must be marked as online
+  </Card>
+  <Card title="Status checks" icon="user-check">
+    No blacklist, dispute, or unstake-request status
+  </Card>
+  <Card title="Capacity checks" icon="gauge-high">
+    Ongoing-order capacity checks
+  </Card>
+  <Card title="Channel status" icon="circle-check">
+    Payment-channel active/approved status
+  </Card>
+  <Card title="Volume limits" icon="chart-line">
+    Daily and monthly volume checks
+  </Card>
+  <Card title="Liquidity thresholds" icon="coins">
+    Fiat and stake-backed liquidity thresholds
+  </Card>
+</CardGroup>
+
+## Deterministic Assignment
+
+Assignment is deterministic and on-chain. The checks are layered so that a single failing condition removes a merchant from the candidate pool without affecting others.
+
+<Warning>
+If you're not receiving order assignments, verify that you pass all eligibility criteria. Even one failing check will exclude you from the candidate pool.
+</Warning>

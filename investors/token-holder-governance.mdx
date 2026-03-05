@@ -1,0 +1,89 @@
+---
+title: "Token-Holder Governance"
+description: "How token holders control protocol parameters and decisions"
+---
+
+The target model gives token holders direct control over protocol parameters, treasury, and upgrades.
+
+## Governance Parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Voting Power | 1 staked $P2P = 1 vote (delegatable) |
+| Voting Delay | 1 day |
+| Voting Period | 7 days |
+| Standard Quorum | 4% |
+| Critical Quorum | 20% |
+| Standard Majority | 50% + 1 |
+| Critical Majority | 66% supermajority |
+| Timelock | 7 days before execution |
+
+## Voting Mechanics
+
+### Voting Power
+
+- **1 staked $P2P = 1 vote**
+- Voting power is **delegatable**
+- Only staked tokens count for governance
+
+### Proposal Thresholds
+
+<Tabs>
+  <Tab title="Standard Proposals">
+    **Standard Quorum:** 4% of staked tokens must participate
+    
+    **Standard Majority:** 50% + 1 of votes cast must approve
+    
+    Used for routine parameter changes and non-critical updates
+  </Tab>
+  
+  <Tab title="Critical Proposals">
+    **Critical Quorum:** 20% of staked tokens must participate
+    
+    **Critical Majority:** 66% supermajority required
+    
+    Required for major protocol upgrades, treasury spending, and structural changes
+  </Tab>
+</Tabs>
+
+### Timeline
+
+1. **Voting Delay:** 1 day after proposal submission
+2. **Voting Period:** 7 days for voting
+3. **Timelock:** 7 days before execution (if passed)
+
+## Governable Parameters
+
+Token holders can control:
+
+<CardGroup cols={2}>
+  <Card title="Fee Structure" icon="percent">
+    Fee percentages and spread configuration
+  </Card>
+  
+  <Card title="Staking Rules" icon="layer-group">
+    Staking requirements and slashing conditions
+  </Card>
+  
+  <Card title="Volume Limits" icon="gauge">
+    Transaction volume limits and caps
+  </Card>
+  
+  <Card title="Treasury Allocation" icon="vault">
+    How protocol revenue is deployed
+  </Card>
+  
+  <Card title="Smart Contracts" icon="code">
+    Protocol upgrades and contract changes
+  </Card>
+  
+  <Card title="Token Whitelisting" icon="list-check">
+    Which tokens can be used in the protocol
+  </Card>
+</CardGroup>
+
+## Additional Resources
+
+<Info>
+For contract-level governance detail (roles, permissions, dispute mechanics), see [For Builders](/builders/start-here).
+</Info>

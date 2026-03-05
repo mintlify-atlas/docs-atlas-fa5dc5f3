@@ -1,0 +1,617 @@
+---
+title: "Disclosures & Risks"
+description: "Important disclosures, risk factors, and user warnings"
+---
+
+While the protocol is designed with safety and resilience in mind, users should understand the inherent risks of participating in decentralized finance.
+
+<Warning>
+**Risk Acknowledgment:**
+
+By using P2P Protocol, users acknowledge they understand and accept the risks outlined in this section. The protocol makes no guarantees of:
+- Guaranteed execution of orders
+- Fixed prices or spreads
+- Protection against all forms of loss
+- Regulatory approval in all jurisdictions
+- Continuous protocol availability
+
+Users are responsible for their own due diligence and risk management.
+</Warning>
+
+## Regulatory Uncertainty
+
+Regulatory uncertainty remains a factor in the evolving crypto landscape. Jurisdictional shifts in how regulators classify or restrict peer-to-peer transactions may limit protocol features or geographic coverage over time. The protocol aims to remain compliant through programmable policy parameters, but cannot guarantee future regulatory treatment.
+
+### Regulatory Risks
+
+<Accordion title="Changing Legal Frameworks">
+**Risk:**
+Crypto regulations evolve rapidly. Laws that allow P2P crypto exchanges today may change tomorrow.
+
+**Potential Impacts:**
+- Restrictions on fiat on/off-ramps in certain jurisdictions
+- KYC requirements becoming more stringent
+- Transaction limit reductions mandated by regulators
+- Outright bans in some countries
+- Tax reporting requirements
+
+**Protocol Response:**
+- Programmable compliance parameters
+- Regional restriction capabilities
+- Governance can adapt to new regulations
+- Legal counsel monitoring developments
+- Transparent communication of changes
+
+**User Impact:**
+- May lose access in restricted regions
+- Increased verification requirements possible
+- Lower limits in some jurisdictions
+- Need to comply with local laws
+</Accordion>
+
+<Accordion title="Classification Uncertainty">
+**Risk:**
+How authorities classify the protocol and its token remains uncertain.
+
+**Possible Classifications:**
+- Money transmitter (may require licensing)
+- Payment service provider (different regulations)
+- DeFi protocol (lighter regulation in some jurisdictions)
+- Securities issuer (if token deemed security)
+
+**Implications:**
+- Licensing requirements may emerge
+- Compliance costs could increase
+- Some features may need modification
+- Geographic availability may change
+
+**Mitigation:**
+- Legal opinions obtained pre-launch
+- Compliance framework in place
+- Willingness to adapt to requirements
+- Decentralized structure limits liability
+</Accordion>
+
+<Accordion title="Tax Treatment">
+**Risk:**
+Tax authorities may assert claims on crypto transactions.
+
+**Potential Taxes:**
+- Capital gains on crypto appreciation
+- Income tax on received crypto
+- Transaction taxes in some jurisdictions
+- Wealth taxes on holdings
+
+**User Responsibility:**
+- Users responsible for tax compliance
+- Protocol does not withhold or report taxes
+- Consult tax professionals
+- Maintain transaction records
+</Accordion>
+
+## Liquidity Conditions
+
+Liquidity conditions affect the user experience. During periods of low merchant activity or thin order books, spreads may widen and matching times may increase. The Proof-of-Credibility system incentivizes reliable liquidity provision, but market conditions remain outside the protocol's direct control.
+
+### Liquidity Risks
+
+<Accordion title="Merchant Availability">
+**Risk:**
+Merchants may not always be available, especially for:
+- Less popular fiat currencies
+- Unusual payment rails
+- Very large or very small orders
+- Off-peak hours
+
+**Consequences:**
+- Longer waiting times for order matching
+- Wider spreads
+- Order expiry without matching
+- Need to retry at different times
+
+**Mitigation:**
+- Liquidity incentives for underserved regions
+- Multiple merchant tiers
+- Order queuing and notification system
+- Future: Automated market maker backstop
+</Accordion>
+
+<Accordion title="Spread Widening">
+**Risk:**
+During low liquidity or high volatility, spreads may widen significantly.
+
+**When This Happens:**
+- Major crypto market volatility
+- Local fiat currency instability
+- Merchant liquidity shortages
+- High demand periods
+
+**Impact:**
+- Users pay more per transaction
+- Less favorable rates than centralized exchanges
+- Economic viability of small transactions affected
+
+**Transparency:**
+- Spreads always visible before trade
+- Users can choose to wait for better conditions
+- Historical spread data available
+</Accordion>
+
+<Accordion title="Market Conditions">
+**Risk:**
+Extreme market conditions can impact protocol function.
+
+**Examples:**
+- Flash crashes in crypto prices
+- Fiat currency devaluation
+- Banking system disruptions
+- Blockchain network congestion
+
+**Responses:**
+- Circuit breakers pause trading during extreme volatility
+- Oracle deviation guards protect against manipulation
+- Dispute windows account for settlement delays
+- Communication of service impacts
+</Accordion>
+
+## Oracle Dependencies
+
+Oracle dependencies introduce potential points of failure. Price feeds sourced from external oracles could experience outages or manipulation attempts. The protocol mitigates this through deviation guards, staleness checks, multiple source aggregation, and circuit breakers that pause trading when anomalies are detected.
+
+### Oracle Risks
+
+<Accordion title="Price Feed Failures">
+**Risk:**
+Oracles may fail, become stale, or provide incorrect prices.
+
+**Causes:**
+- API outages at exchanges
+- Network connectivity issues
+- Oracle provider downtime
+- Data source manipulation
+
+**Consequences:**
+- Trading paused until oracles recover
+- Stale prices may cause poor trade execution
+- Users unable to create orders
+- Existing orders may expire
+
+**Mitigation:**
+- Multiple independent oracle sources
+- Staleness detection (60-second threshold)
+- Automatic fallback hierarchy
+- Circuit breakers halt trading vs. using bad data
+- Median aggregation resistant to single-source failure
+</Accordion>
+
+<Accordion title="Oracle Manipulation">
+**Risk:**
+Sophisticated attackers might manipulate oracle sources.
+
+**Attack Vectors:**
+- Flash loan attacks on DEX prices
+- Market manipulation on thin CEX pairs
+- Compromise of oracle provider infrastructure
+- Coordinated wash trading
+
+**Protections:**
+- TWAP (time-weighted average) smoothing
+- Deviation thresholds (5% triggers circuit breaker)
+- Multiple diverse sources
+- Outlier filtering
+- Short quote expiry (60 seconds)
+
+**Limitations:**
+- Cannot protect against all manipulation
+- Very sophisticated, well-funded attacks may succeed
+- Users should be aware prices may not always be perfect
+</Accordion>
+
+<Accordion title="Oracle Centralization">
+**Risk:**
+Reliance on oracle providers introduces centralization.
+
+**Current State:**
+- Mix of centralized (exchange APIs) and decentralized (Chainlink, Pyth) sources
+- Some single points of failure remain
+
+**Future Improvements:**
+- Increased oracle diversity
+- More decentralized price sources
+- On-chain TWAP from DEXes
+- Governance can replace oracle providers
+
+**User Awareness:**
+- Oracle providers listed transparently
+- If concerned about centralization, wait for more decentralized oracles
+</Accordion>
+
+## Payment Rail Characteristics
+
+Payment rail characteristics vary significantly. Some rails support instant, irreversible transfers while others are prone to chargebacks or reversals. The protocol addresses this through risk classification, requiring stronger proofs, higher bonds, and longer settlement windows for higher-risk rails.
+
+### Payment Rail Risks
+
+<Accordion title="Chargeback Risk">
+**Risk:**
+Some payment methods allow chargebacks even after settlement.
+
+**High-Risk Rails:**
+- Credit cards (chargeback window: 60-120 days)
+- PayPal (dispute window: 180 days)
+- Some bank transfers (varies by country)
+
+**Consequences:**
+- Merchant receives fiat, releases crypto, then fiat is reversed
+- Merchant loses both fiat and crypto
+- Fraudster profits
+
+**Protections:**
+- Higher-risk rails have:
+  - Extended dispute windows (24-48 hours)
+  - Higher bond requirements (2-3x)
+  - Stricter merchant vetting
+  - Lower transaction limits for new users
+- Still, some risk remains
+
+**Recommendation:**
+- Users should prefer low-risk rails (UPI, PIX, wire)
+- Merchants should be cautious with high-risk rails
+</Accordion>
+
+<Accordion title="Settlement Delays">
+**Risk:**
+Some rails have slow settlement, creating uncertainty.
+
+**Examples:**
+- International wires: 1-5 business days
+- ACH: 1-3 business days
+- SEPA: 1-2 business days
+
+**Impacts:**
+- Long wait times for order completion
+- Funds locked during settlement
+- Expiry risk if settlement exceeds time windows
+- Price risk during delay period
+
+**Mitigations:**
+- Longer time windows for slow rails
+- Clear expectation setting for users
+- Status updates during settlement
+- Prefer faster rails when possible
+</Accordion>
+
+<Accordion title="Rail Availability">
+**Risk:**
+Payment rails may experience outages or restrictions.
+
+**Examples:**
+- Bank holidays (rails closed)
+- Technical issues (UPI down, PIX maintenance)
+- Regulatory actions (rail restricted or banned)
+- Account freezes (individual payment accounts)
+
+**Consequences:**
+- Unable to complete fiat transfers
+- Orders may expire
+- Need to use alternative rails
+- Service disruptions
+
+**Communication:**
+- Known outages communicated to users
+- Rail status page
+- Alternative rail suggestions
+- Refunds/cancellations during outages
+</Accordion>
+
+## Smart Contract Risk
+
+Smart contract risk cannot be entirely eliminated. Despite rigorous audits, formal verification efforts, and ongoing bug bounty programs, the possibility of undiscovered vulnerabilities remains. Users should only transact amounts they can afford to have at risk.
+
+### Smart Contract Risks
+
+<Accordion title="Code Vulnerabilities">
+**Risk:**
+Smart contracts may contain bugs or exploitable vulnerabilities.
+
+**Potential Vulnerabilities:**
+- Reentrancy attacks
+- Integer overflow/underflow
+- Access control flaws
+- Logic errors
+- Front-running vulnerabilities
+- Gas manipulation
+
+**Mitigations:**
+- Multiple independent audits pre-launch
+- Formal verification of critical components
+- Open source code for community review
+- Bug bounty program ($500K max payout)
+- Gradual rollout with monitoring
+- Emergency pause capabilities
+
+**Reality:**
+- Even audited contracts can have bugs
+- New attack vectors emerge over time
+- Composability creates unexpected interactions
+- No contract is perfectly secure
+</Accordion>
+
+<Accordion title="Upgrade Risks">
+**Risk:**
+Contract upgrades could introduce new vulnerabilities or malicious changes.
+
+**Concerns:**
+- Rushed upgrades without adequate review
+- Malicious upgrade proposals
+- Bugs in upgrade process itself
+- Governance capture leading to harmful upgrades
+
+**Protections:**
+- 7-day timelock on all upgrades
+- Required audits for major changes
+- Governance approval required
+- Emergency rollback capabilities
+- Transparent upgrade process
+
+**User Actions:**
+- Monitor governance proposals
+- Review upgrade code before approval
+- Exit if uncomfortable with upgrade
+- Trust but verify
+</Accordion>
+
+<Accordion title="Blockchain Risks">
+**Risk:**
+Underlyingblockchain (Base, Solana) could experience issues.
+
+**Possible Problems:**
+- Network outages or downtime
+- Consensus failures
+- Reorganizations affecting finality
+- Economic attacks on L2 bridge
+- Sequencer failures (for Base)
+
+**Consequences:**
+- Protocol temporarily unavailable
+- Transaction delays
+- Rare: transaction reversals
+- Very rare: loss of funds
+
+**Mitigation:**
+- Built on established L2 (Base) and L1 (Solana planned)
+- Multi-chain strategy reduces single-chain risk
+- Can migrate to new chains if necessary
+- Emergency procedures for chain failures
+</Accordion>
+
+<Accordion title="Loss of Funds Scenarios">
+**Risk:**
+Various scenarios could result in user fund loss.
+
+**Possible Causes:**
+- Smart contract exploit
+- Oracle manipulation
+- Governance attack
+- Key compromise (user or admin)
+- Blockchain reorganization
+
+**Realistic Assessment:**
+- Low probability for each specific scenario
+- Protocol designed with defense in depth
+- Multiple safeguards must fail for fund loss
+- But: Non-zero risk remains
+
+**User Responsibility:**
+- Only transact amounts you can afford to lose
+- Understand smart contract risk
+- Don't treat protocol as a bank or savings account
+- Withdraw funds when not actively trading
+- Monitor protocol announcements
+</Accordion>
+
+## Market and Economic Risks
+
+<Accordion title="Token Price Volatility">
+**Risk:**
+Protocol token price may be volatile.
+
+**Causes:**
+- Crypto market volatility
+- Protocol usage fluctuations
+- Governance decisions
+- Competitive pressures
+- Market sentiment
+
+**Impacts:**
+- Staking rewards volatile in USD terms
+- Fee discounts vary in real value
+- Treasury value fluctuates
+- Merchant incentives affected
+
+**Awareness:**
+- Token is NOT a stablecoin
+- Price may go down as well as up
+- Past performance doesn't guarantee future results
+- Speculative asset with real utility
+</Accordion>
+
+<Accordion title="Competitive Threats">
+**Risk:**
+Other protocols may offer superior features or liquidity.
+
+**Competition From:**
+- Centralized exchanges (convenience, liquidity)
+- Other DEX/P2P protocols
+- Traditional remittance services improving
+- New technologies and approaches
+
+**Risk to Protocol:**
+- Loss of market share
+- Fee pressure
+- Reduced merchant participation
+- Lower token value
+
+**Competitive Advantages:**
+- Non-custodial design
+- Privacy-preserving
+- Credible neutrality
+- Open and permissionless
+- Community ownership
+
+**Reality:**
+- Competition is healthy and inevitable
+- Protocol must continue innovating
+- Not guaranteed to succeed
+</Accordion>
+
+<Accordion title="Adoption Risk">
+**Risk:**
+Protocol may fail to achieve sufficient adoption.
+
+**If Adoption Fails:**
+- Insufficient liquidity
+- High spreads
+- Poor user experience
+- Merchant attrition
+- Token value decline
+- Potential protocol shutdown
+
+**Success Factors:**
+- Product-market fit
+- User experience quality
+- Marketing and awareness
+- Regulatory environment
+- Crypto market conditions
+- Execution by community
+
+**Honest Assessment:**
+- Most crypto projects fail
+- Success not guaranteed
+- Early stage with risks
+- Invest accordingly
+</Accordion>
+
+## User-Specific Risks
+
+<Warning>
+**User Responsibility:**
+
+The protocol cannot protect users from:
+- Phishing attacks
+- Wallet compromises
+- Social engineering
+- User error
+- Local law violations
+
+Users must take responsibility for their own security and compliance.
+</Warning>
+
+<Accordion title="Wallet Security">
+**Risk:**
+Loss or compromise of wallet private keys.
+
+**Consequences:**
+- Permanent loss of funds
+- Unauthorized transactions
+- Reputation loss
+- No recovery possible
+
+**User Responsibility:**
+- Secure private key storage
+- Hardware wallet recommended
+- Never share seed phrase
+- Beware of phishing
+- Test with small amounts first
+</Accordion>
+
+<Accordion title="Phishing and Scams">
+**Risk:**
+Scammers may impersonate the protocol or merchants.
+
+**Common Scams:**
+- Fake websites (typosquatting)
+- Impersonator merchants
+- Fake support accounts
+- Phishing emails
+- Social media scams
+
+**Protection:**
+- Only use official links (p2p.me, coins.me)
+- Verify URLs carefully
+- Never share private keys or seed phrases
+- Protocol never asks for seeds
+- When in doubt, ask in official Discord
+</Accordion>
+
+<Accordion title="Regulatory Compliance">
+**Risk:**
+Users violate local laws unknowingly or intentionally.
+
+**User Obligations:**
+- Comply with local KYC/AML laws
+- Report taxes as required
+- Don't use from restricted jurisdictions
+- Follow transaction limits
+- Honest representation in verification
+
+**Consequences of Violations:**
+- Criminal penalties in your jurisdiction
+- Protocol ban and reputation loss
+- Bond forfeiture
+- Legal action
+
+**Disclaimer:**
+- Protocol doesn't provide legal advice
+- Users responsible for their own compliance
+- Consult local legal counsel if unsure
+</Accordion>
+
+## General Disclaimers
+
+<Warning>
+**Important Disclaimers:**
+
+1. **No Investment Advice:** Nothing in this whitepaper constitutes investment advice. Consult financial professionals.
+
+2. **No Guarantees:** Protocol makes no guarantees of profits, returns, or protection against loss.
+
+3. **Experimental Technology:** DeFi is experimental. Use at your own risk.
+
+4. **Regulatory Uncertainty:** Legal status may change. Protocol may need to restrict access.
+
+5. **Do Your Own Research:** Don't rely solely on this whitepaper. Investigate independently.
+
+6. **Risk of Loss:** You could lose everything you invest or transact. Only risk what you can afford to lose.
+
+7. **Forward-Looking Statements:** Roadmap and plans are aspirational, not promises. Actual results may differ.
+
+8. **Third-Party Risk:** Protocol integrates third-party services (oracles, verifiers, rails) with their own risks.
+
+9. **No Recourse:** In most scenarios, lost funds cannot be recovered. No insurance or government protection.
+
+10. **Evolving Document:** This whitepaper may be updated. Check for latest version.
+</Warning>
+
+## Informed Participation
+
+By using P2P Protocol, you acknowledge that:
+
+- You have read and understood this Disclosures & Risks section
+- You understand the risks involved in DeFi participation
+- You accept full responsibility for your actions and outcomes
+- You will comply with applicable laws in your jurisdiction
+- You will not hold the protocol, developers, or community liable for losses
+- You are using the protocol voluntarily and at your own risk
+
+<Info>
+**Stay Informed:**
+
+- Monitor protocol announcements: [blog.p2p.me](https://blog.p2p.me)
+- Join Discord for real-time updates: [discord.gg/p2p](https://discord.gg/p2p)
+- Follow on Twitter: [@p2pprotocol](https://twitter.com/p2pprotocol)
+- Review governance proposals before they execute
+- Report security issues: security@p2p.me
+
+Knowledge is your best protection.
+</Info>

@@ -1,0 +1,48 @@
+---
+title: "Insurance"
+description: "Multi-tier insurance pool coverage for Circle participants"
+---
+
+Each Circle includes insurance pools to protect participants.
+
+## Insurance Pool Tiers
+
+### CAIP (Circle Admin Insurance Pool)
+
+First-line coverage funded by a percentage of Circle volume plus slashed stakes.
+
+<Note>
+CAIP is the first tier of protection and is drawn from before other pools.
+</Note>
+
+### CALR (Circle Admin Locked Rewards)
+
+A portion of admin earnings locked as a rolling buffer.
+
+### PIP (Protocol Insurance Pool)
+
+Backstop for systemic failures or depleted lower-tier pools.
+
+## Claims Priority
+
+Claims draw from pools in strict priority order:
+
+<Steps>
+  <Step title="CAIP first">
+    Circle Admin Insurance Pool is used first for claims.
+  </Step>
+  <Step title="CALR second">
+    Circle Admin Locked Rewards if CAIP is depleted.
+  </Step>
+  <Step title="PIP last">
+    Protocol Insurance Pool as final backstop.
+  </Step>
+</Steps>
+
+<Warning>
+Insurance pools are designed to protect against losses, but they are finite. Operating responsibly helps preserve pool capacity for genuine claims.
+</Warning>
+
+<Note>
+Circle-native insurance pools with programmable slash/reward logic and claim workflows are planned for a future release.
+</Note>

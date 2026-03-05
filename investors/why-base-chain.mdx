@@ -1,0 +1,103 @@
+---
+title: "Why Base Chain?"
+description: "Chain selection rationale and multi-chain deployment plans"
+---
+
+## Why Base?
+
+Low fees and fast finality make frequent small transactions practical.
+
+<CardGroup cols={2}>
+  <Card title="Low Transaction Costs" icon="coins">
+    Base's L2 architecture enables affordable fees for small P2P transactions
+  </Card>
+  
+  <Card title="Fast Finality" icon="bolt">
+    Quick confirmation times improve user experience for on/off ramp flows
+  </Card>
+  
+  <Card title="EVM Compatibility" icon="code">
+    Leverages existing Ethereum tooling and smart contract infrastructure
+  </Card>
+  
+  <Card title="Ecosystem Support" icon="users">
+    Growing DeFi ecosystem and developer community
+  </Card>
+</CardGroup>
+
+## Transaction Economics
+
+P2P on/off ramping involves frequent, often small-value transactions. Chain selection directly impacts:
+
+- **User experience:** High gas fees make small transactions impractical
+- **Protocol economics:** Transaction costs eat into merchant margins
+- **Adoption:** Expensive chains limit emerging market accessibility
+
+Base provides the cost structure needed for sustainable P2P infrastructure.
+
+## Solana Deployment
+
+<Info>
+Solana deployment is planned within six months of token launch.
+</Info>
+
+### Why Solana Next?
+
+- **Even lower costs:** Sub-cent transaction fees
+- **Higher throughput:** Greater transaction capacity
+- **Growing ecosystem:** Expanding DeFi and payment infrastructure
+- **User demand:** Strong Solana community in target markets
+
+### Multi-Chain Vision
+
+Chain choice does not lock the token design. The protocol can expand to multiple chains while maintaining:
+
+- Unified governance
+- Consistent token economics
+- Cross-chain treasury management
+- Coordinated protocol upgrades
+
+## Technical Infrastructure
+
+### Current Stack (Base)
+
+- Smart contracts for escrow and matching
+- On-chain parameter governance
+- Treasury management
+- Staking and delegation
+
+### Planned Expansion (Solana)
+
+- Native Solana program implementation
+- Cross-chain bridge for token portability
+- Unified governance across chains
+- Shared liquidity pools where practical
+
+## Deployment Timeline
+
+| Milestone | Timeline |
+|-----------|----------|
+| Base mainnet launch | TGE (Q1 2026) |
+| Solana testnet deployment | Q2 2026 |
+| Solana mainnet launch | Within 6 months of TGE |
+| Additional chains (TBD) | Governance-directed |
+
+## How Do I Separate What's Live from What's Planned?
+
+Inline notes throughout the docs mark features planned for future releases. For contract-level detail on what is deployed, see [For Builders](/builders/start-here).
+
+### Currently Live
+
+- Onramp/offramp rails on Base
+- Matching engine
+- Dispute resolution
+- On-chain parameter controls
+- Transaction processing
+
+### Planned Features
+
+- Solana deployment (within 6 months)
+- Full insurance-pool stack with programmable logic
+- B2B SDK (June 2026)
+- Cross-chain governance
+- Additional chain deployments (governance-directed)

@@ -1,0 +1,359 @@
+---
+title: "Compliance & Policy Positioning"
+description: "Regulatory approach, user responsibilities, and compliance framework"
+---
+
+P2P Protocol aims to remain in good standing with legal regulations. The user is responsible for legitimate usage and taxation in their jurisdiction.
+
+<Info>
+**Compliance Framework:**
+
+- **Non-custodial stance:** The Protocol coordinates peers and verifies evidence; it does not take custody of fiat.
+- **Risk controls:** Transaction limits, reputation tiers, optional ZK-KYC, sanctions-screening interfaces for merchants, and governed regional parameter sets.
+- **Disclosures:** The Protocol does not advocate tax evasion or illegal activity; violations remain the user's liability.
+</Info>
+
+## User Responsibility in Taxation
+
+The Protocol aims to remain in completely good standing with legal regulations surrounding the use of the platform. To this end, the user is ultimately responsible for legitimate usage of the exchange and is solely responsible for taxation compliance. In short, the Protocol does not levy taxes on a user's behalf, but the user is responsible for filing (or withholding) them all the same, subject to the jurisdiction they reside in.
+
+<Warning>
+**Tax Compliance Notice:**
+
+Likewise, it must be noted that the Protocol in no way intends to advocate tax evasion or related practices. As a trustless KYC solution for both on-ramp and off-ramp transactions, the Protocol merely attempts to preserve the privacy and anonymity of the user for fair transactions. In the event any illegal activity including but not limited to tax evasion occurs, the user shall be fully liable for the legal consequences within their jurisdiction.
+</Warning>
+
+### User Tax Obligations
+
+Users should be aware of:
+
+- **Capital gains:** Crypto-to-fiat conversions may trigger taxable events
+- **Income reporting:** Crypto received as payment may be taxable income
+- **Transaction records:** Users should maintain records for tax purposes
+- **Jurisdiction-specific rules:** Tax treatment varies widely by country
+- **Professional advice:** Users should consult tax professionals
+
+### Protocol Tax Reporting
+
+The protocol itself:
+
+- **Does not file** tax documents on users' behalf
+- **Does not withhold** taxes from transactions
+- **Does provide** transaction history export for user record-keeping
+- **Does not share** user data with tax authorities (unless legally compelled)
+
+## Micro-Transactions for Mass Adoption
+
+Blockchain transactions have been traditionally notorious for high transfer fees and slow processing times. Currently deployed on Base (Solana planned), the Protocol can afford to charge very nominal fees for its on- and off-ramps, thanks to the faster validation times and lower gas costs. The difference is especially pronounced for smaller transactions where newcomers routinely feel discouraged by the slow and expensive economics involved.
+
+### Economic Inclusion Benefits
+
+<CardGroup cols={2}>
+  <Card title="Low-Cost Access" icon="coins">
+    Microtransactions enable crypto access for users who cannot afford minimum balances or high fees on traditional platforms.
+  </Card>
+  
+  <Card title="Financial Inclusion" icon="hand-holding-dollar">
+    Nearly **1.2 billion people have mobile phones but lack reliable access to banks**. The protocol provides financial services without traditional banking requirements.
+  </Card>
+  
+  <Card title="Remittance Access" icon="paper-plane">
+    Small cross-border transfers become economically viable, serving the remittance market with lower fees than traditional services.
+  </Card>
+  
+  <Card title="Merchant Adoption" icon="store">
+    Low fees enable merchants to accept crypto payments for everyday purchases, not just high-value transactions.
+  </Card>
+</CardGroup>
+
+### Mass Adoption Through Microtransactions
+
+The Protocol's robust on-chain reputation management coupled with its transaction limits does more than just drive mass adoption of decentralized currencies and transactions. In fact, a sole emphasis on large transactions ironically coincides with the prospects of money laundering and other foul economic practices. P2P Protocol in the space particularly underscores the importance of micro-transactions instead, by making these both viable and useful for the community.
+
+<Info>
+**Why Microtransactions Matter:**
+
+Besides mass consumer adoption of cryptocurrencies, microtransactions enable newfound financial access through web3 for underrepresented communities in today's banking system. For people with mobile phones but no bank access, being able to perform transactions in the neighborhood of $50-$500 in a way that is secure and egalitarian is paramount—a feat that P2P Protocol can readily help achieve.
+</Info>
+
+### Web2 and Web3 Integration
+
+The adoption of crypto for consumer payments has implications for both the Web2 and Web3 economies:
+
+- **Existing e-commerce:** Web2 companies can accept crypto payments via the protocol
+- **Creator economy:** Content creators receive payments directly in crypto
+- **Gig economy:** Freelancers get paid globally without banking infrastructure
+- **DeFi on-ramps:** Easy fiat-to-crypto conversion fuels DeFi participation
+- **New business models:** Microtransaction economics enable previously unviable services
+
+## Regulatory Compliance Framework
+
+### Non-Custodial Positioning
+
+<Note>
+**Critical Distinction:**
+
+The Protocol coordinates peer-to-peer transactions but does not take custody of user funds:
+
+- **Crypto:** Held atomically in smart contracts during settlement only
+- **Fiat:** Never held by the protocol—transfers directly between users and merchants
+- **No pooling:** No commingled funds
+- **No lending:** No rehypothecation or lending of user assets
+
+This non-custodial design places the protocol outside many traditional financial service regulations while still maintaining compliance with applicable laws.
+</Note>
+
+### Applicable Regulations (Jurisdictional)
+
+The protocol operates in a complex regulatory landscape:
+
+<Accordion title="AML/CFT Compliance">
+**Anti-Money Laundering / Counter-Financing of Terrorism:**
+
+**Approach:**
+- Transaction limits based on verification level
+- Gradual limit increases requiring reputation building
+- Velocity limits preventing rapid fund movement
+- Pattern detection for suspicious activity
+- Optional enhanced due diligence for high-value users
+
+**Compliance:**
+- Meets functional requirements through technical controls
+- No requirement for centralized KYC database
+- Privacy-preserving sanctions screening (via ZK proofs)
+</Accordion>
+
+<Accordion title="Sanctions Screening">
+**OFAC and International Sanctions:**
+
+**Approach:**
+- ZK-proof verification includes sanctions list checks
+- Merchant-level screening for high-risk jurisdictions
+- Blocked regions excluded at protocol level
+- Regular sanctions list updates
+
+**Implementation:**
+- Users prove they are NOT on sanctions lists via ZK circuits
+- No need to reveal identity for negative verification
+- Automated enforcement without manual review
+</Accordion>
+
+<Accordion title="Travel Rule (Planned)">
+**FATF Travel Rule for VASPs:**
+
+**Requirement:**
+- Transmit originator and beneficiary information for transactions >$1,000
+
+**Protocol Approach:**
+- Selective disclosure circuits for regulated counterparties
+- Peer-to-peer transactions below threshold exempt
+- Merchant-to-business transactions include required disclosures
+- Privacy preserved for individual users
+
+**Status:** Planned for jurisdictions requiring compliance
+</Accordion>
+
+<Accordion title="Securities Regulations">
+**Protocol Token Classification:**
+
+**Position:**
+- Token is a governance and utility token, not a security
+- No promise of profits from others' efforts
+- Decentralized governance from launch
+- Utility in protocol operations (staking, governance, fee discounts)
+
+**Precautions:**
+- Legal opinion obtained
+- Compliance with Howey test analysis
+- Geographic restrictions if necessary
+- Transparent token economics
+</Accordion>
+
+<Accordion title="Data Protection (GDPR, CCPA)">
+**Privacy Regulations:**
+
+**Approach:**
+- Data minimization by design
+- No PII stored on-chain
+- User rights: access, export, deletion
+- Limited data retention periods
+- Privacy by default
+
+**Compliance:**
+- GDPR principles embedded in architecture
+- Right to be forgotten (off-chain data)
+- Data portability via exports
+- Clear privacy policy and notices
+</Accordion>
+
+### Regional Parameter Sets
+
+The protocol implements jurisdiction-specific parameters:
+
+```json
+{
+  "region": "EU",
+  "regulations": {
+    "max_unverified": 150,        // EUR
+    "max_verified": 10000,        // EUR per month
+    "kyc_requirement": "tier_2",
+    "travel_rule_threshold": 1000,
+    "data_retention": "gdpr",
+    "allowed_rails": ["SEPA", "wire"]
+  }
+}
+```
+
+<Info>
+**Governance Flexibility:**
+
+Regional parameters are governed on-chain, allowing the protocol to adapt to regulatory changes without requiring smart contract upgrades.
+</Info>
+
+## Prohibited Activities
+
+<Warning>
+**Users Must Not:**
+
+- Use the protocol for money laundering
+- Finance terrorism or sanctioned activities
+- Evade taxes or reporting requirements
+- Engage in fraud or misrepresentation
+- Violate sanctions or trade restrictions
+- Process proceeds of crime
+- Manipulate markets or prices
+- Use the protocol from prohibited jurisdictions
+
+Violations may result in:
+- Account suspension
+- Reputation destruction
+- Bond forfeiture
+- Reporting to authorities
+- Legal action
+</Warning>
+
+## Merchant Compliance Requirements
+
+Merchants face enhanced compliance obligations:
+
+### Enhanced Due Diligence
+
+- **Identity verification:** Higher KYC tiers required
+- **Source of funds:** Liquidity source documentation
+- **Business registration:** If operating as a business
+- **Tax compliance:** Proof of tax registration where applicable
+- **Regular reviews:** Periodic re-verification
+
+### Transaction Monitoring
+
+- **Suspicious activity reporting:** Merchants expected to flag unusual patterns
+- **Record keeping:** Maintain transaction records per local requirements
+- **Cooperation:** Respond to compliance inquiries
+
+### Regional Licensing
+
+In some jurisdictions, merchants may need:
+
+- Money transmitter licenses
+- Payment service provider registration
+- AML compliance programs
+- Regular reporting to authorities
+
+<Note>
+The protocol assists merchants with compliance but does not provide legal advice. Merchants should consult local legal counsel regarding their obligations.
+</Note>
+
+## Regulator Self-Serve Legitimacy
+
+### Transparency for Regulators
+
+The protocol is designed to be understandable and auditable by regulators:
+
+<CardGroup cols={2}>
+  <Card title="Open Source" icon="code">
+    All smart contracts open source and verifiable on-chain. Regulators can review code and verify operation.
+  </Card>
+  
+  <Card title="On-Chain Parameters" icon="sliders">
+    All compliance parameters visible on-chain. No hidden rules or backdoors.
+  </Card>
+  
+  <Card title="Audit Reports" icon="file-contract">
+    Independent security audits published. Demonstrate due diligence and security practices.
+  </Card>
+  
+  <Card title="Documentation" icon="book">
+    Comprehensive whitepaper and technical docs explain exactly how the protocol works.
+  </Card>
+</CardGroup>
+
+### Regulator Resources
+
+The protocol provides:
+
+- **Compliance dashboard:** Real-time statistics on limits, verification rates, dispute resolution
+- **Technical documentation:** Detailed specifications for how controls work
+- **Contact information:** Compliance officer for regulatory inquiries
+- **Transparency reports:** Periodic reporting on protocol operations
+
+## Geographic Coverage
+
+### Currently Supported Regions
+
+<Note>
+The protocol currently operates in jurisdictions where:
+1. Applicable regulations are clear
+2. Non-custodial P2P activity is lawful
+3. Local payment rails are available
+4. Risk profile is acceptable
+</Note>
+
+### Restricted Regions
+
+The protocol restricts access in:
+
+- **Sanctioned countries:** As per OFAC and UN sanctions
+- **High-risk jurisdictions:** FATF blacklist countries
+- **Regulatory uncertainty:** Where legal status is unclear
+- **Technical limitations:** Where payment rails unavailable
+
+<Warning>
+Attempting to access the protocol from restricted regions via VPNs or other means:
+- Violates terms of service
+- May result in permanent ban
+- Could constitute illegal activity in user's jurisdiction
+</Warning>
+
+## Compliance Roadmap
+
+### Current State
+
+- Basic AML controls via transaction limits
+- ZK-KYC for identity verification
+- Sanctions screening at verification
+- Geographic restrictions enforced
+
+### Near-Term (0-6 months)
+
+- Enhanced transaction monitoring
+- Suspicious activity detection ML
+- Travel Rule preparation for applicable jurisdictions
+- Merchant compliance toolkit
+
+### Medium-Term (6-18 months)
+
+- Travel Rule implementation (selective disclosure)
+- Regional license applications where required
+- Regulatory engagement program
+- Compliance certification for merchants
+
+### Long-Term (18+ months)
+
+- Global regulatory coordination
+- Standardized compliance frameworks
+- Automated regulatory reporting
+- Full decentralization while maintaining compliance
+
+<Info>
+The protocol commits to evolving its compliance approach as regulations develop, always prioritizing user privacy while meeting legal requirements.
+</Info>

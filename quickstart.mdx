@@ -1,80 +1,161 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: 'Quickstart Guide'
+description: 'Get started with P2P Protocol in minutes'
 ---
 
-## Get started in three steps
+## Getting Started with P2P Protocol
 
-Get your documentation site running locally and make your first customization.
+This guide will walk you through everything you need to start buying, selling, or paying with stablecoins on P2P Protocol.
 
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
+<Steps>
+  <Step title="Understand the Protocol">
+    Before diving in, familiarize yourself with how P2P Protocol works:
     
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
+    - **Zero-knowledge proofs** enable privacy-preserving KYC
+    - **Proof-of-Credibility** algorithm matches you with vetted merchants
+    - **Non-custodial** - you maintain control of your assets at all times
+    - Trades settle **on-chain** without platform custody
     
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+    <Info>
+    Read the [Introduction](/introduction) for a deeper understanding of the protocol's core concepts.
+    </Info>
+  </Step>
 
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+  <Step title="Prepare Your Requirements">
+    Gather what you need before starting:
     
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    **Essential requirements:**
+    - An account on a P2P Protocol client app (wallet is provided in-app via thirdweb integration)
+    - Access to supported payment rails in your region
+    - Stablecoin balance if you plan to SELL or PAY
+    
+    **Basic safety checks:**
+    - Confirm you are on the official app domain before signing in
+    - Verify order details (amount, currency, recipient) before submission
+    - Do not share your login credentials or account recovery information
+    
+    <Warning>
+    Always verify you're on the official P2P Protocol domain to avoid phishing attacks.
+    </Warning>
+  </Step>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+  <Step title="Choose Your Role">
+    Determine how you want to interact with the protocol:
+    
+    <CardGroup cols={2}>
+      <Card title="User" icon="user" href="/users/start-here">
+        **Buy, Sell, or Pay with crypto**
+        
+        - Buy stablecoins with fiat currency
+        - Sell stablecoins for fiat
+        - Make payments using crypto
+        - No collateral required
+      </Card>
+      <Card title="Merchant" icon="store" href="/merchants/start-here">
+        **Provide liquidity and earn**
+        
+        - Become a vetted merchant
+        - Build Proof-of-Credibility reputation
+        - Earn from facilitating trades
+        - Serve your local payment rails
+      </Card>
+    </CardGroup>
+  </Step>
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+  <Step title="Create Your First Order">
+    Ready to transact? Here's the basic flow:
+    
+    **For Users (BUY orders):**
+    
+    ```typescript
+    // Example flow (implementation varies by client)
+    1. Select "BUY" order type
+    2. Enter amount and choose currency
+    3. Review matched merchant's credibility score
+    4. Submit order and confirm on-chain
+    5. Transfer fiat to merchant via payment rail
+    6. Receive stablecoins upon confirmation
+    ```
+    
+    **For Users (SELL orders):**
+    
+    ```typescript
+    // Example flow (implementation varies by client)
+    1. Select "SELL" order type
+    2. Enter amount and provide payment details
+    3. Lock stablecoins in the order
+    4. Wait for merchant match
+    5. Receive fiat via your payment method
+    6. Confirm receipt to release crypto
+    ```
+    
+    <Note>
+    Each order type has specific requirements and flows. See the detailed guides:
+    - [Order Types](/users/order-types)
+    - [How to Place an Order](/users/how-to-place-order)
+    - [What to Do by Order Type](/users/what-to-do-by-order-type)
+    </Note>
+  </Step>
 
-### Step 3: Go live
+  <Step title="Monitor Order States">
+    Track your order through its lifecycle:
+    
+    **Typical order states:**
+    - **Pending** - Order submitted, awaiting match
+    - **Matched** - Counterparty found, ready for payment
+    - **Payment Sent** - Awaiting confirmation
+    - **Completed** - Trade settled successfully
+    - **Disputed** - Issue raised, resolution in progress
+    
+    <Info>
+    Learn more about order states and transitions in [Understanding Order States](/users/understanding-order-states).
+    </Info>
+  </Step>
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+  <Step title="Know Your Support Options">
+    If issues arise, you have several resources:
+    
+    **Self-service resources:**
+    - [Troubleshooting Guide](/users/troubleshooting) - Common issues and solutions
+    - [FAQ](/users/faq) - Frequently asked questions
+    - [Disputes and Evidence](/users/disputes-evidence) - How to handle disputes
+    
+    **Dispute resolution:**
+    - On-chain admin settlement for unresolved issues
+    - Evidence submission through the protocol
+    - Transparent resolution process
+    
+    <Warning>
+    Always gather evidence (screenshots, transaction IDs, timestamps) for any disputed transactions.
+    </Warning>
+  </Step>
+</Steps>
 
-## Next steps
-
-Now that you have your docs running, explore these key features:
+## Next Steps
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="User Documentation" icon="book-open" href="/users/start-here">
+    Complete guide for buying, selling, and paying with P2P Protocol
+  </Card>
+  <Card title="Merchant Documentation" icon="graduation-cap" href="/merchants/start-here">
+    Learn how to become a merchant and understand counterparty actions
+  </Card>
+  <Card title="Whitepaper" icon="file-contract" href="/whitepaper/abstract">
+    Protocol context, design goals, security models, and governance
+  </Card>
+  <Card title="Order Types" icon="list-check" href="/users/order-types">
+    Detailed breakdown of BUY, SELL, and PAY order flows
+  </Card>
 </CardGroup>
 
+## Need Help?
+
+If you encounter any issues:
+
+1. Check the [Troubleshooting Guide](/users/troubleshooting)
+2. Review the [FAQ](/users/faq)
+3. Consult [Disputes and Evidence](/users/disputes-evidence) if needed
+
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+For protocol-level questions, refer to the [Whitepaper](/whitepaper/abstract) for comprehensive technical documentation.
 </Note>

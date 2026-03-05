@@ -1,0 +1,170 @@
+---
+title: "Trade Protocol (On- and Off-Ramp)"
+description: "Formal specification of order lifecycle, states, and parameters"
+---
+
+We formalize the order lifecycle as a state machine with timeouts:
+
+**States:** `OPEN → MATCHED → FUNDED → CONFIRMED → SETTLED | DISPUTED → RESOLVED | EXPIRED`
+
+## Common Parameters (governed)
+
+<Info>
+**Protocol Parameters:**
+
+- `T_match` (max time to accept a match)
+- `T_fiat` (max time to make fiat transfer)
+- `T_confirm` (confirmation window)
+- `T_dispute` (challenge window)
+- `B_bond_user`, `B_bond_merchant` (optional performance bonds/slashing weights by reputation tier and payment rail risk class)
+- `min_amount`, `max_amount` per rail/region
+- Fee schedules
+- Quote expiry windows
+</Info>
+
+These parameters are governance-controlled and can be adjusted based on network conditions, risk assessments, and community input.
+
+## On-Ramp (Fiat → USDC on Base; Solana planned)
+
+<Steps>
+  <Step title="Open Order">
+    User opens BUY order with amount & rail.
+  </Step>
+  
+  <Step title="Match">
+    Protocol assigns a merchant (highest compatible Proof-of-Credibility and quote). Refundable bonds may lock.
+  </Step>
+  
+  <Step title="Fund Fiat">
+    User pays fiat to provided account within `T_fiat`.
+  </Step>
+  
+  <Step title="Merchant Acknowledgment">
+    Merchant confirms receipt of fiat payment.
+  </Step>
+  
+  <Step title="Settlement">
+    Contract releases USDC to user; fees assessed; bonds unlocked.
+  </Step>
+  
+  <Step title="Dispute (if applicable)">
+    If conflict, parties submit evidence; authorized admins issue on-chain verdict.
+  </Step>
+</Steps>
+
+### On-Ramp State Transitions
+
+```
+OPEN
+  |
+  ├─> [T_match expires] ─> EXPIRED
+  └─> [Merchant accepts] ─> MATCHED
+         |
+         ├─> [T_fiat expires] ─> EXPIRED
+         └─> [User pays fiat] ─> FUNDED
+                |
+                ├─> [T_confirm expires] ─> DISPUTED
+                └─> [Merchant confirms] ─> CONFIRMED
+                       |
+                       ├─> [Challenge raised] ─> DISPUTED ─> RESOLVED
+                       └─> [T_dispute passes] ─> SETTLED
+```
+
+## Off-Ramp (USDC on Base → Fiat; Solana planned)
+
+<Steps>
+  <Step title="Open Order">
+    User opens SELL order; transfers USDC to escrowless settlement adapter (contract holds or streams atomically per design).
+  </Step>
+  
+  <Step title="Match">
+    Merchant accepts and posts quote/bond.
+  </Step>
+  
+  <Step title="Fund Crypto">
+    User's USDC is locked for settlement.
+  </Step>
+  
+  <Step title="Merchant Pays Fiat">
+    Merchant pays fiat and confirms completion; or user challenges.
+  </Step>
+  
+  <Step title="Settle/Dispute">
+    Settlement proceeds as with on-ramp flow.
+  </Step>
+</Steps>
+
+### Off-Ramp State Transitions
+
+```
+OPEN
+  |
+  ├─> [T_match expires] ─> EXPIRED (USDC returned)
+  └─> [Merchant accepts + posts bond] ─> MATCHED
+         |
+         ├─> [User doesn't lock USDC] ─> EXPIRED
+         └─> [USDC locked] ─> FUNDED
+                |
+                ├─> [T_fiat expires] ─> DISPUTED
+                └─> [Merchant pays fiat] ─> CONFIRMED
+                       |
+                       ├─> [User disputes] ─> DISPUTED ─> RESOLVED
+                       └─> [T_dispute passes] ─> SETTLED
+```
+
+## Payment-Rail Risk Classes
+
+<Note>
+Rails differ (instant/irreversible vs reversible/chargeback-prone). The protocol maps rails to bond multipliers, confirmation requirements, and longer/shorter dispute windows.
+</Note>
+
+### Risk Classification
+
+**Low-Risk Rails:**
+- UPI (India)
+- PIX (Brazil)
+- FPS (Hong Kong)
+
+Characteristics: instant, irreversible, wide adoption
+- Shorter dispute windows
+- Lower bond requirements
+- Faster settlement
+
+**Medium-Risk Rails:**
+- SEPA (Europe)
+- ACH (United States)
+- Wire transfers
+
+Characteristics: slower, mostly irreversible, established
+- Standard dispute windows
+- Moderate bond requirements
+- Normal settlement timelines
+
+**Higher-Risk Rails:**
+- Credit card payments
+- PayPal
+- Other chargeback-prone methods
+
+Characteristics: reversible, chargeback risk, consumer protections
+- Extended dispute windows
+- Higher bond requirements
+- Additional confirmation steps
+
+### Rail-Specific Parameters
+
+Each rail class has governance-controlled parameters:
+
+```json
+{
+  "rail_class": "UPI",
+  "risk_tier": "low",
+  "T_fiat": 300,        // 5 minutes
+  "T_confirm": 600,     // 10 minutes
+  "T_dispute": 3600,    // 1 hour
+  "bond_multiplier": 1.0,
+  "min_amount": 100,
+  "max_amount": 50000
+}
+```
+
+These parameters ensure appropriate risk mitigation for each payment method while maintaining protocol efficiency.

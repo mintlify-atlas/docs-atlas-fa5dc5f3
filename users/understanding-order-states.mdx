@@ -1,0 +1,50 @@
+---
+title: "Understanding Order States"
+description: "Track your order through different states and understand what each status means"
+---
+
+## Order Status Lifecycle
+
+Your order will move through different states as it progresses. Understanding these states helps you know what to expect and what actions to take.
+
+| Status | Meaning | What It Means for You |
+|--------|---------|------------------------|
+| `PLACED` | Order created and pending active handling | Your order is in the queue waiting for merchant assignment |
+| `ACCEPTED` | A merchant accepted the order | A merchant has been matched to your order and will begin processing |
+| `PAID` | Payment leg was marked paid in protocol flow | Payment has been confirmed by one party in the transaction |
+| `COMPLETED` | Settlement path finished successfully | Your order is complete and all funds have been transferred |
+| `CANCELLED` | Order was cancelled or expired | The order did not complete and has been terminated |
+
+<Info>
+  Your order status (`PLACED`, `ACCEPTED`, `PAID`, `COMPLETED`, `CANCELLED`) tells you what stage you're at. Each status implies a specific next action, and the app will guide you through it.
+</Info>
+
+## When to Take Action
+
+<AccordionGroup>
+  <Accordion title="Order stuck in PLACED">
+    If your order remains in `PLACED` for longer than expected:
+    - Merchant assignment depends on availability and eligibility
+    - Wait for the timeout period specified in the app
+    - Consider canceling and recreating the order if needed
+  </Accordion>
+  
+  <Accordion title="Order stuck in ACCEPTED">
+    If your order stays in `ACCEPTED` without progressing:
+    - Check if you need to complete any required actions (payment, confirmation, etc.)
+    - Verify you've followed all instructions provided in the app
+    - Contact support if the merchant is not responding
+  </Accordion>
+  
+  <Accordion title="Order stuck in PAID">
+    If your order remains in `PAID` status:
+    - The counterparty may be completing their settlement actions
+    - Wait for the specified time window
+    - Use in-app support/escalation if the delay exceeds normal processing time
+    - Check dispute eligibility if conditions are met
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+  If your order remains in a state longer than expected, use in-app support/escalation and check dispute eligibility.
+</Warning>

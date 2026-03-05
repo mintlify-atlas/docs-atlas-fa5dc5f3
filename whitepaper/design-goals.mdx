@@ -1,0 +1,58 @@
+---
+title: "Design Goals and Non-Goals"
+description: "Core objectives and explicit boundaries of P2P Protocol"
+---
+
+## Goals
+
+<Info>
+**Primary Design Goals:**
+
+- Decentralized on/off-ramp between fiat and stablecoins without fiat escrow.
+- Privacy by design using ZK proofs for identity verification while keeping raw data off-chain. Bank transaction verification is planned (see Section 4.2).
+- Credible neutrality: protocol-level rules are open, transparent, and upgradable via governance.
+- Fast settlement: typical completion within minutes, targeting sub-~90s for common rails as network, liquidity, and automation improve.
+- Safety & integrity: explicit threat model, dispute flows, and rate/limit controls to minimize fraud.
+</Info>
+
+### Decentralized On/Off-Ramp
+
+The protocol enables peer-to-peer fiat-to-stablecoin exchanges without requiring users to trust a centralized custodian with their funds. Both crypto and fiat transfers happen directly between counterparties.
+
+### Privacy by Design
+
+Zero-knowledge proofs allow users to verify their identity and establish credibility without exposing personal data on-chain. Only the minimum necessary information is revealed through cryptographic attestations.
+
+### Credible Neutrality
+
+All protocol rules, parameters, and upgrade paths are transparent and governed on-chain. No special treatment exists for any client, merchant, or user—everyone operates under the same verifiable rules.
+
+### Fast Settlement
+
+By leveraging modern payment rails and L2 scaling solutions, the protocol targets settlement times competitive with centralized services while maintaining decentralization.
+
+### Safety and Integrity
+
+Multiple layers of protection including reputation systems, dispute resolution mechanisms, transaction limits, and fraud detection work together to create a secure environment.
+
+## Non-Goals
+
+<Warning>
+**Explicit Non-Goals:**
+
+- The Protocol does not hold customer fiat or crypto in custody.
+- The Protocol does not guarantee price or liquidity; it coordinates peers and market inputs.
+- The Protocol does not store personal data on behalf of users; it records necessary commitments and verdicts on-chain while raw evidence remains off-chain.
+</Warning>
+
+### No Custodial Services
+
+P2P Protocol fundamentally differs from centralized exchanges by never taking custody of user funds. Users maintain control of their assets throughout the transaction lifecycle.
+
+### No Guaranteed Liquidity
+
+The protocol provides coordination and matching infrastructure but does not promise specific pricing or guaranteed trade execution. Market conditions depend on merchant participation and broader economic factors.
+
+### No Personal Data Storage
+
+Raw identity documents, bank statements, and other personal information never touch the blockchain. Only cryptographic commitments and dispute verdicts are recorded on-chain, with all sensitive data remaining off-chain with users or their chosen verifiers.

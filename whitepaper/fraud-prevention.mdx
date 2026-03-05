@@ -1,0 +1,198 @@
+---
+title: "Fraud Prevention"
+description: "How reputation, limits, and incentives prevent fraudulent activity"
+---
+
+## How Reputation Prevents Fraud
+
+Merely making the protocol fully anonymous would do little to preclude the possibility of users misusing the platform. However, combined with the strict reputation system for on-ramp transactions, the chances of a buyer committing impersonation fraud drop drastically, especially given the meager amounts they can transact with their expectedly suspicious on-chain reputation.
+
+<Info>
+**Reputation as a Fraud Deterrent:**
+
+New users with low reputation scores face:
+- Very limited transaction amounts (starting around $100)
+- Higher bond requirements
+- Longer dispute windows
+- Lower matching priority
+
+These constraints make fraud economically unviable—the cost of building reputation and posting bonds exceeds any potential fraudulent gains from small-value transactions.
+</Info>
+
+### Non-Custodial KYC Effectiveness
+
+It is worth noting that centralized exchanges routinely face difficulties in implementing a viable KYC procedure for their users. The Protocol's non-custodial KYC works just as effectively as a traditional KYC in preventing fraud, while retaining the benefit of anonymity for the user if no illicit activity surfaces over the course of their interaction with the platform.
+
+**Key Advantages:**
+
+- **Privacy by default:** Users maintain anonymity unless disputes occur
+- **Progressive disclosure:** Only reveal what's necessary when needed
+- **Cryptographic verification:** Harder to forge than document photos
+- **Real-time validation:** Instant verification without manual review delays
+
+### Fraud Economics
+
+Consider the economic calculus for a potential fraudster:
+
+<Accordion title="Attempting Fraud as a New User">
+**Costs:**
+- ZK-KYC verification setup: time and legitimate credentials required
+- Bond posting: 2x transaction value locked
+- Limited to small amounts: max $100-500 initially
+- High probability of detection and dispute loss
+- Permanent reputation damage
+
+**Potential Gain:**
+- Maximum $100-500 if somehow successful
+
+**Expected Value:**
+- Negative, given bond requirements and detection likelihood
+</Accordion>
+
+<Accordion title="Building Reputation for Future Fraud">
+**Costs:**
+- Months of legitimate transactions to build reputation
+- Capital tied up in bonds across multiple transactions
+- ZK-KYC costs and setup
+- Opportunity cost of time and capital
+
+**Potential Gain:**
+- Access to larger transaction limits
+- But: higher bonds, more evidence trails, greater losses if caught
+
+**Expected Value:**
+- Still negative; easier to profit from legitimate merchant activity
+</Accordion>
+
+## Anti-Money Laundering Through Transaction Limits
+
+The underlying RP mechanism practically eliminates the risk of money laundering and similar malevolent practices. The transaction limits imposed naturally take care of anti-money laundering compliance. There is simply less of a scope for any non-trivial amount of black money to be laundered given the lack of transactional scalability and the reputational banning risks involved.
+
+<Warning>
+**AML Through Design:**
+
+The protocol's structure inherently prevents large-scale money laundering:
+
+- **Gradual limit increases:** Can't instantly move large sums
+- **Reputation requirements:** Takes months to build sufficient credibility
+- **Transaction history:** All trades create on-chain commitments
+- **Dispute visibility:** Suspicious patterns trigger enhanced scrutiny
+- **Sybil resistance:** Can't easily create multiple high-reputation accounts
+</Warning>
+
+### Comparison to Traditional Money Laundering Vectors
+
+**Traditional P2P Risks:**
+- Instant high-value transfers
+- Anonymous accounts
+- No transaction history required
+- Minimal verification
+
+**P2P Protocol Mitigations:**
+- Gradual limit growth over time
+- On-chain reputation tied to actions
+- Extensive verified transaction history required for high limits
+- ZK-KYC verification with compliance checks
+
+### Velocity Limits
+
+Beyond per-transaction limits, the protocol enforces:
+
+- **Daily transaction caps** based on reputation
+- **Weekly volume limits** that prevent rapid accumulation
+- **Cooldown periods** between large transactions
+- **Suspicious pattern detection** triggering enhanced review
+
+These velocity limits make it impractical to move significant illicit funds through the protocol, even with a high-reputation account.
+
+## Merchant Accountability
+
+The selected nature of the merchants fulfilling individual orders—via the Proof-of-Credibility algorithm—means a serious disincentive and unlikelihood for any merchant to attempt a fraudulent transaction.
+
+### Merchant-Specific Protections
+
+<CardGroup cols={2}>
+  <Card title="High Reputation Requirements" icon="star">
+    Merchants must build extensive positive history before handling significant volume, making their reputation too valuable to risk.
+  </Card>
+  
+  <Card title="Bonded Liquidity" icon="lock">
+    Merchants post substantial bonds that are slashed for fraudulent behavior, creating direct financial disincentives.
+  </Card>
+  
+  <Card title="Dispute Exposure" icon="scale-balanced">
+    Every transaction creates a potential dispute record. Merchants with poor resolution rates lose priority.
+  </Card>
+  
+  <Card title="Future Value" icon="trending-up">
+    Honest merchants earn long-term income from fees and potential protocol incentives—far more valuable than one-time fraud.
+  </Card>
+</CardGroup>
+
+### Merchant Incentive Alignment
+
+Successful merchants earn:
+- **Transaction fees:** Ongoing revenue from honest activity
+- **Reputation premiums:** Higher-reputation merchants command better matching
+- **Protocol incentives:** Potential token rewards for liquidity provision (planned)
+- **Customer loyalty:** Repeat business from satisfied users
+
+A single fraudulent transaction would:
+- Slash their bond
+- Destroy their reputation
+- Ban them from the protocol
+- Eliminate all future earnings
+
+**The math is clear:** honest operation is far more profitable than fraud.
+
+## Detection and Response
+
+### Automated Detection
+
+The protocol monitors for:
+- **Unusual transaction patterns**
+- **Sudden reputation changes**
+- **Geographic anomalies**
+- **Timing irregularities**
+- **Coordinated behavior** across accounts
+
+### Response Mechanisms
+
+<Steps>
+  <Step title="Pattern Detection">
+    Automated systems flag suspicious activity for review.
+  </Step>
+  
+  <Step title="Enhanced Scrutiny">
+    Flagged accounts face temporary limit reductions and closer monitoring.
+  </Step>
+  
+  <Step title="Evidence Gathering">
+    If fraud is suspected, additional proof requirements are enforced.
+  </Step>
+  
+  <Step title="Dispute Resolution">
+    Formal disputes proceed through the standard resolution process.
+  </Step>
+  
+  <Step title="Reputation Impact">
+    Proven fraud results in severe reputation penalties or permanent bans.
+  </Step>
+  
+  <Step title="Bond Slashing">
+    Posted bonds are slashed to compensate victims.
+  </Step>
+</Steps>
+
+## Network Effects in Fraud Prevention
+
+As the protocol grows:
+
+- **More data:** Better pattern recognition and fraud detection
+- **Higher stakes:** Reputation becomes more valuable, increasing cost of fraud
+- **Community vigilance:** More participants monitoring and reporting suspicious activity
+- **Merchant competition:** Honest merchants have incentive to maintain protocol integrity
+
+<Info>
+The protocol becomes more secure against fraud as it scales, creating a positive feedback loop where growth enhances safety.
+</Info>

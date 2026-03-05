@@ -1,0 +1,309 @@
+---
+title: "Liquidity & Market Design"
+description: "Current liquidity model and future enhancements"
+---
+
+## Current Liquidity Model
+
+The stablecoin liquidity is currently offered by carefully reviewed peers from all around the globe, following the Proof-of-Credibility algorithm. Liquidity is available around the clock with affordable fees, secure transactions, and ease of use.
+
+<Info>
+**Current Liquidity Characteristics:**
+
+- **Global merchant network:** Vetted liquidity providers across major regions
+- **24/7 availability:** Around-the-clock trading on most supported rails
+- **Affordable fees:** Competitive spreads maintained through protocol-level pricing
+- **Reputation-based matching:** Highest-credibility merchants prioritized
+- **Multi-rail support:** Various payment methods to maximize accessibility
+</Info>
+
+### Merchant Selection and Vetting
+
+Becoming a merchant requires:
+
+1. **High reputation threshold:** Extensive successful trading history as a regular user
+2. **Advanced KYC verification:** Multiple verification methods completed
+3. **Liquidity demonstration:** Proof of sufficient capital to handle transaction volume
+4. **Bond posting:** Substantial bond locked as collateral (amount scaled by tier)
+5. **Rail expertise:** Demonstrated competence on intended payment rails
+
+### Current Incentive Structure
+
+Merchants earn through:
+
+- **Transaction fees:** Percentage of each trade value
+- **Volume bonuses:** Additional rewards for high transaction volume
+- **Reputation premiums:** Priority matching leads to more transactions
+- **Spread participation:** Share of the protocol-managed spread
+
+## Future Liquidity Enhancements
+
+Future versions may introduce merchant staking or LP incentives using protocol tokens. Specifically, the most frequent and reputed users of the protocol would be able to stake their stablecoin holdings for reward in the form of protocol tokens. This new liquidity would exist on top of the existing liquidity offered by the merchants.
+
+<Note>
+**Planned Enhancements:**
+
+- Merchant staking pools earning protocol token rewards
+- Liquidity provider (LP) incentive programs
+- Automated market-making mechanisms
+- Cross-region liquidity balancing
+- Dynamic fee optimization
+</Note>
+
+### Merchant Staking Model (Planned)
+
+<Accordion title="Staking Mechanics">
+**How it works:**
+
+1. Merchants stake USDC in liquidity pools
+2. Staked funds become available for instant settlement
+3. Merchants earn yield from:
+   - Transaction fees (existing)
+   - Protocol token emissions
+   - Priority boost in matching
+4. Unstaking has cooldown period (e.g., 7 days)
+5. Slashing applies for fraud or failure to fulfill orders
+
+**Benefits:**
+- Deeper liquidity for users
+- Better price discovery
+- Reduced settlement times
+- Aligned merchant incentives
+</Accordion>
+
+<Accordion title="LP Token System">
+**Tokenized liquidity positions:**
+
+1. Merchants stake USDC, receive LP tokens
+2. LP tokens represent pro-rata share of:
+   - Staked liquidity
+   - Accumulated fees
+   - Protocol token rewards
+3. LP tokens tradable on secondary markets
+4. Automatic compounding of earned fees
+
+**Advantages:**
+- Capital efficiency through tokenization
+- Liquid exit mechanism for merchants
+- Composability with other DeFi protocols
+</Accordion>
+
+<Accordion title="Protocol Token Emissions">
+**Incentive distribution:**
+
+- X% of token supply allocated to liquidity mining
+- Emissions distributed based on:
+  - Staked liquidity amount
+  - Staking duration
+  - Transaction volume facilitated
+  - Reputation score
+  - Geographic diversity (bonus for underserved regions)
+- Decay schedule over time to ensure sustainability
+
+**Goals:**
+- Bootstrap liquidity in new regions
+- Reward long-term committed merchants
+- Maintain balanced geographic coverage
+</Accordion>
+
+### Quote Commitment and Market Discipline
+
+Quote commitment, minimum depth, and cancellation penalties are governed to reduce adverse selection and no-shows.
+
+#### Quote Commitment Rules
+
+<Warning>
+**Merchant Obligations:**
+
+- Merchants must honor quotes for the stated expiry period
+- Minimum liquidity depth requirements based on tier
+- Cancellation allowed only in exceptional circumstances
+- Penalties for no-shows or unjustified cancellations
+</Warning>
+
+**Cancellation Scenarios:**
+
+**Allowed (no penalty):**
+- Price oracle deviation >5%
+- Technical failures (blockchain congestion, rail downtime)
+- User verification fails additional KYC checks
+- Exceeded daily volume limits
+
+**Penalized (reputation + bond):**
+- Arbitrary cancellation after match
+- Repeated no-shows
+- Failure to respond within time window
+- Pattern of selective order acceptance
+
+### Minimum Depth Requirements
+
+Merchants must maintain minimum liquidity:
+
+**Tier 1 Merchants:**
+- Minimum: $10,000 available liquidity
+- Can handle orders up to $5,000
+- Must maintain 90% uptime
+
+**Tier 2 Merchants:**
+- Minimum: $50,000 available liquidity
+- Can handle orders up to $25,000
+- Must maintain 95% uptime
+
+**Tier 3 Merchants:**
+- Minimum: $200,000 available liquidity
+- Can handle orders up to $100,000
+- Must maintain 98% uptime
+
+## Geographic Liquidity Distribution
+
+The protocol actively manages liquidity distribution across regions:
+
+### Current Coverage
+
+<CardGroup cols={2}>
+  <Card title="Asia-Pacific" icon="earth-asia">
+    - India (UPI)
+    - Southeast Asia (QRIS, PayNow)
+    - Hong Kong (FPS)
+    - Active merchant count: High
+  </Card>
+  
+  <Card title="Latin America" icon="earth-americas">
+    - Brazil (PIX)
+    - Mexico (SPEI)
+    - Argentina
+    - Active merchant count: Growing
+  </Card>
+  
+  <Card title="Europe" icon="earth-europe">
+    - SEPA region
+    - UK (Faster Payments)
+    - Active merchant count: Medium
+  </Card>
+  
+  <Card title="Africa & MENA" icon="earth-africa">
+    - Nigeria
+    - Kenya (M-Pesa)
+    - UAE
+    - Active merchant count: Emerging
+  </Card>
+</CardGroup>
+
+### Liquidity Incentive Zones
+
+<Info>
+**Priority Regions for Growth:**
+
+The protocol offers enhanced incentives for merchants in underserved regions:
+
+- **Bonus token emissions:** 2-3x multiplier
+- **Reduced bond requirements:** Lower barrier to entry
+- **Marketing support:** Co-promotion with protocol
+- **Technical assistance:** Dedicated onboarding support
+
+Current focus areas: Africa, MENA, Eastern Europe, additional LATAM countries
+</Info>
+
+## Market Design Principles
+
+### Adverse Selection Prevention
+
+The protocol prevents adverse selection through:
+
+1. **Short quote expiry:** Limits merchant exposure to rapid price changes
+2. **Reputation-based matching:** Poor performers lose access to order flow
+3. **Transparent pricing:** All fees and spreads visible before trade
+4. **Circuit breakers:** Protect against extreme market conditions
+
+### Order Matching Algorithm
+
+Matching prioritizes:
+
+```
+Priority Score = (
+  Reputation Score * 0.4 +
+  Completion Rate * 0.3 +
+  Average Settlement Time * 0.15 +
+  Liquidity Depth * 0.15
+)
+```
+
+**Tiebreakers:**
+1. Lowest spread offered
+2. Fastest historical settlement
+3. Geographic proximity to user
+4. Random selection among equals
+
+### Dynamic Spread Adjustment
+
+The protocol adjusts spreads based on:
+
+- **Market volatility:** Wider spreads during volatile periods
+- **Liquidity depth:** Tighter spreads when liquidity abundant
+- **Rail risk:** Higher spreads for riskier payment methods
+- **Geographic factors:** Regional supply/demand imbalances
+
+```
+Spread = Base_Spread + Volatility_Premium + Liquidity_Adjustment + Rail_Risk_Premium
+```
+
+## Liquidity Bootstrapping Strategy
+
+### Phase 1: Launch (Current)
+
+- Manual merchant vetting and onboarding
+- Focus on high-volume rails (UPI, PIX)
+- Conservative limits to manage risk
+- Admin oversight of all large transactions
+
+### Phase 2: Scaling (0-12 months)
+
+- Automated merchant tier upgrades
+- Expand to 20+ countries and rail types
+- Introduce merchant staking (planned)
+- Increase maximum order sizes
+
+### Phase 3: Mature Network (12+ months)
+
+- Self-serve merchant onboarding
+- LP token system and token incentives
+- Cross-chain liquidity (Solana, additional L2s)
+- Autonomous market operations
+
+## Liquidity Risk Management
+
+<Warning>
+**Risk Mitigation Strategies:**
+
+- **Diversification:** No single merchant >10% of total volume
+- **Reserve requirements:** Merchants must maintain liquidity buffers
+- **Insurance pool:** Protocol-managed pool for merchant defaults (planned)
+- **Gradual scaling:** Order limits increase gradually with proven capacity
+- **Real-time monitoring:** Automated alerts for liquidity shortfalls
+</Warning>
+
+### Merchant Default Handling
+
+If a merchant fails to fulfill orders:
+
+1. **Immediate:** Order reassigned to backup merchant
+2. **Short-term:** Reputation slashing and temporary suspension
+3. **Investigation:** Review of default circumstances
+4. **Resolution:**
+   - Accidental/technical: Reduced penalty, reinstatement after review
+   - Intentional/repeated: Bond forfeiture, permanent ban
+5. **User compensation:** From merchant bond and insurance pool
+
+## Future: Autonomous Liquidity Layer
+
+Long-term vision includes an autonomous liquidity layer:
+
+- **Automated market makers:** Protocol-owned liquidity for instant settlement
+- **Cross-protocol aggregation:** Route to best liquidity across P2P protocols
+- **Just-in-time liquidity:** Flash loan style liquidity for large orders
+- **Predictive rebalancing:** AI-driven liquidity positioning
+- **Composable liquidity:** Integration with broader DeFi liquidity networks
+
+<Info>
+This creates a self-sustaining liquidity ecosystem where the protocol can guarantee execution for most orders without relying on individual merchant availability.
+</Info>

@@ -1,0 +1,148 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about using P2P Protocol"
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Do I need to understand on-chain mechanics?" icon="link">
+    **No.** The client app handles all contract interaction for you.
+    
+    You don't need to understand how blockchain transactions work, smart contracts, or any technical on-chain mechanics. Simply follow the status prompts and instructions in the app, and it will handle all the technical details automatically.
+    
+    The app abstracts away the complexity so you can focus on your transactions.
+  </Accordion>
+  
+  <Accordion title="Why wasn't my order matched instantly?" icon="clock">
+    Merchant assignment depends on several real-time eligibility factors:
+    
+    - **Liquidity availability** - Merchants must have sufficient liquidity to fulfill your order
+    - **Channel status** - Payment channels must be active and operational
+    - **Volume limits** - Merchants have daily and per-transaction volume limits
+    - **Operational availability** - Merchants must be online and actively accepting orders
+    - **Regional support** - Merchants must support your specific payment rail and region
+    
+    If no merchant qualifies at the time you place your order, the order will wait in the queue or eventually time out. You can try:
+    - Placing the order at a different time
+    - Adjusting the order amount
+    - Using a different payment rail if available
+  </Accordion>
+  
+  <Accordion title="Can I appeal a dispute?" icon="gavel">
+    Yes, you can use the in-app dispute process to submit your case.
+    
+    Currently, disputes are resolved by authorized admins based on the evidence submitted by both parties and protocol rules. Make sure to:
+    - Submit comprehensive evidence
+    - Provide clear explanations
+    - Respond to any requests for additional information
+    
+    <Info>
+      Governance-driven escalation tiers are planned for a future release, which will provide additional appeal and escalation options for complex cases.
+    </Info>
+  </Accordion>
+  
+  <Accordion title="Is my identity stored on-chain?" icon="shield">
+    **No raw PII (Personally Identifiable Information) is stored on-chain.**
+    
+    The protocol uses ZK-KYC (Zero-Knowledge Know Your Customer) proofs for identity verification. Here's how it works:
+    
+    - Your identity is verified off-chain
+    - Only cryptographic commitments and verification verdicts are stored on-chain
+    - Your personal information (name, address, ID numbers, etc.) remains private
+    - The protocol can verify you're legitimate without exposing your identity
+    
+    This approach provides security and compliance while preserving your privacy.
+  </Accordion>
+  
+  <Accordion title="How do I know what to do next?" icon="compass">
+    Your order status tells you exactly what stage you're at and what to do next.
+    
+    Each status implies specific actions:
+    
+    - **`PLACED`** - Wait for merchant assignment
+    - **`ACCEPTED`** - Follow instructions for payment or transfer
+    - **`PAID`** - Wait for counterparty settlement (or confirm receipt if you're the recipient)
+    - **`COMPLETED`** - Order finished, verify you received funds
+    - **`CANCELLED`** - Order terminated, review reason and recreate if needed
+    
+    The app will guide you through each step with clear prompts and instructions. You don't need to guess what to do - just follow the app's guidance.
+  </Accordion>
+  
+  <Accordion title="What payment rails are supported?" icon="money-bill-transfer">
+    Supported payment rails vary by region and client app implementation.
+    
+    Common payment methods include:
+    - Bank transfers (ACH, wire, SEPA, etc.)
+    - Mobile money (M-Pesa, GCash, etc.)
+    - Digital wallets
+    - Payment processors
+    
+    Check your client app for the specific payment rails available in your region. The available options will be displayed when you place an order.
+  </Accordion>
+  
+  <Accordion title="Are there any fees?" icon="dollar-sign">
+    Fees depend on your client app and the payment rails used.
+    
+    Potential fees include:
+    - Protocol fees (if any, set by the protocol)
+    - Client app fees (set by the app provider)
+    - Payment rail fees (bank fees, network fees, etc.)
+    - Blockchain gas fees (usually covered by the app)
+    
+    All applicable fees should be clearly displayed before you confirm your order. Review the fee breakdown carefully before submitting.
+  </Accordion>
+  
+  <Accordion title="How long does an order take?" icon="hourglass">
+    Order completion time varies based on several factors:
+    
+    - **Order type** - BUY, SELL, or PAY orders have different flows
+    - **Payment rail speed** - Bank transfers take longer than instant payment methods
+    - **Merchant response time** - How quickly the merchant processes their part
+    - **Confirmation requirements** - Number of required confirmations and steps
+    
+    Typical timeframes:
+    - Instant payment methods: Minutes to hours
+    - Bank transfers: Hours to days
+    - International transfers: 1-3 business days
+    
+    Check the estimated completion time in your order details.
+  </Accordion>
+  
+  <Accordion title="Can I cancel my order?" icon="xmark">
+    It depends on the current status of your order.
+    
+    - **Before acceptance** - You can usually cancel orders in `PLACED` status
+    - **After acceptance** - Cancellation may not be possible once a merchant is assigned
+    - **After payment/transfer** - Orders typically cannot be cancelled after funds are transferred
+    
+    Check your app for a cancel button or option. If cancellation isn't available and you need to stop the order, contact support immediately.
+    
+    <Warning>
+      Never cancel an order after sending payment. This may result in loss of funds or require dispute resolution.
+    </Warning>
+  </Accordion>
+  
+  <Accordion title="What if I sent payment to the wrong details?" icon="triangle-exclamation">
+    If you sent payment to incorrect details:
+    
+    **Contact support immediately:**
+    - Use the in-app support feature
+    - Provide your order ID and details
+    - Explain what happened
+    
+    **Contact your payment provider:**
+    - Try to recall or cancel the payment if possible
+    - Request a refund or reversal
+    - Document all communications
+    
+    **Do not expect the order to complete:**
+    - The merchant won't receive payment at the correct details
+    - The order will likely time out or be cancelled
+    - You may need to open a dispute with evidence
+    
+    <Warning>
+      Always double-check payment details before sending. Use only the exact details provided in the app.
+    </Warning>
+  </Accordion>
+</AccordionGroup>

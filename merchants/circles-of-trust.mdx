@@ -1,0 +1,52 @@
+---
+title: "Circles of Trust"
+description: "Community-backed merchant collectives and Circle Admin governance"
+---
+
+A Circle of Trust is a community-backed collective of merchants operated by a Circle Admin. Each Circle functions as a semi-autonomous unit within the protocol, managing its own merchant network while adhering to shared on-chain protocol rules.
+
+Circles organize merchants into accountable groups, enable community oversight through staking and delegation, and distribute risk through tiered insurance pools.
+
+## How Circles Work
+
+```mermaid
+flowchart TD
+    user[User order]
+    orderFlow[Order flow]
+    registry[Merchant registry]
+    country[Country config]
+    assignment[Eligibility and assignment checks]
+    settlement[Settlement and accounting]
+
+    user --> orderFlow
+    orderFlow --> registry
+    orderFlow --> country
+    registry --> assignment
+    country --> assignment
+    assignment --> settlement
+```
+
+## Merchant Registry
+
+The merchant registry is the operational core that Circles wrap. All merchant operations are on-chain and role-gated.
+
+<Note>
+First-class Circle entities with dedicated lifecycle, Circle Admin roles with explicit stake requirements, and Circle-scoped merchant grouping are planned for a future release.
+</Note>
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Accountable Groups" icon="users-gear">
+    Merchants organized into community-managed collectives
+  </Card>
+  <Card title="Community Oversight" icon="eye">
+    Staking and delegation enable decentralized governance
+  </Card>
+  <Card title="Distributed Risk" icon="shield-halved">
+    Tiered insurance pools protect participants
+  </Card>
+  <Card title="On-Chain Operations" icon="link">
+    All merchant operations are transparent and role-gated
+  </Card>
+</CardGroup>

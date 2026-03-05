@@ -1,0 +1,531 @@
+---
+title: "Governance & Upgradability"
+description: "Governance mechanisms, upgrade procedures, and decentralization roadmap"
+---
+
+The protocol implements a progressive decentralization strategy, starting with admin controls and transitioning to full token-holder governance.
+
+<Info>
+**Governance Scope:**
+
+- **Parameters:** Fees, limits, rail risk weights, oracle sets, proof policies, bond schedules
+- **Upgrades:** Contracts behind timelocks with public proposals; emergency pause limited to narrow scopes, with automatic sunset
+- **Pre-TGE:** Multisig/council with published members and constraints
+- **Post-TGE:** Token-holder governance of parameters, treasury, and roadmap
+</Info>
+
+## Governed Parameters
+
+The protocol design separates concerns that require on-chain code changes from those that can be adjusted through governance parameters.
+
+### Economic Parameters
+
+<Accordion title="Fee Structure">
+**What's Governed:**
+- Protocol fee percentage (currently 0.5%)
+- Fee distribution (treasury, merchants, stakers)
+- Fee tier thresholds based on reputation
+- Regional fee adjustments
+
+**Current Values:**
+```json
+{
+  "base_fee": 0.005,           // 0.5%
+  "treasury_share": 0.40,      // 40% to treasury
+  "merchant_share": 0.55,      // 55% to merchant
+  "protocol_share": 0.05,      // 5% to protocol development
+  "tier_discounts": {
+    "standard": 0.0,           // No discount
+    "premium": 0.15,           // 15% discount
+    "elite": 0.30              // 30% discount
+  }
+}
+```
+
+**Change Process:**
+- Proposal with economic analysis
+- 7-day discussion period
+- Token vote (>50% approval, >10% turnout)
+- 3-day timelock before implementation
+</Accordion>
+
+<Accordion title="Transaction Limits">
+**What's Governed:**
+- Minimum/maximum order sizes per rail
+- Limits by reputation tier
+- Velocity limits (daily, weekly, monthly)
+- Regional caps
+
+**Current Values:**
+```json
+{
+  "tier_1": {
+    "min": 10,
+    "max": 500,
+    "daily": 1000,
+    "monthly": 10000
+  },
+  "tier_2": {
+    "min": 10,
+    "max": 5000,
+    "daily": 10000,
+    "monthly": 100000
+  },
+  "merchant": {
+    "min": 10,
+    "max": 50000,
+    "daily": 500000,
+    "monthly": 5000000
+  }
+}
+```
+
+**Change Process:**
+- Proposal with risk assessment
+- 5-day discussion period
+- Snapshot vote (>60% approval)
+- Immediate implementation (no timelock for limit reductions)
+</Accordion>
+
+<Accordion title="Reputation Scoring">
+**What's Governed:**
+- Point values for different actions
+- Decay rates
+- Slashing penalties
+- Tier thresholds
+
+**Current Formula:**
+```
+RP = Σ(completed_trades * size_weight * rail_diversity)
+     + ZK_KYC_verifications * tier_multiplier
+     + referrals * reputation_of_referrer
+     - disputes_lost * severity
+     - time_decay
+```
+
+**Change Process:**
+- Proposal with simulation results
+- 14-day discussion and modeling period
+- Token vote (>66% approval due to protocol-critical nature)
+- 7-day timelock before implementation
+</Accordion>
+
+<Accordion title="Bond Requirements">
+**What's Governed:**
+- Bond multipliers by rail risk class
+- Merchant minimum bonds
+- Bond reduction for high-reputation users
+- Slashing schedules
+
+**Current Values:**
+```json
+{
+  "rail_multipliers": {
+    "UPI": 1.0,
+    "PIX": 1.0,
+    "SEPA": 1.5,
+    "WIRE": 1.5,
+    "CARD": 2.5
+  },
+  "merchant_minimum": 10000,
+  "reputation_discount": "5% per 100 RP above 1000"
+}
+```
+</Accordion>
+
+### Technical Parameters
+
+<Accordion title="Oracle Configuration">
+**What's Governed:**
+- Price source list
+- Source weights
+- Staleness thresholds
+- Deviation limits
+- Circuit breaker thresholds
+
+**Change Process:**
+- Technical proposal with security analysis
+- 3-day discussion period
+- Multisig approval (pre-TGE) or token vote (post-TGE)
+- Immediate implementation (critical infrastructure)
+</Accordion>
+
+<Accordion title="Timeouts & Windows">
+**What's Governed:**
+- `T_match`: Time to accept a match
+- `T_fiat`: Time to complete fiat transfer
+- `T_confirm`: Confirmation window
+- `T_dispute`: Dispute window
+- Values vary by rail risk class
+
+**Current Values:**
+```json
+{
+  "UPI": {
+    "T_match": 300,    // 5 minutes
+    "T_fiat": 600,     // 10 minutes
+    "T_confirm": 300,  // 5 minutes
+    "T_dispute": 3600  // 1 hour
+  },
+  "SEPA": {
+    "T_match": 600,
+    "T_fiat": 86400,   // 24 hours
+    "T_confirm": 3600,
+    "T_dispute": 21600 // 6 hours
+  }
+}
+```
+</Accordion>
+
+<Accordion title="Proof Policies">
+**What's Governed:**
+- Accepted verifier list
+- Proof type requirements per tier
+- Verifier sunset procedures
+- Proof freshness requirements
+
+**Change Process:**
+- Security council recommendation
+- 7-day review period
+- Token vote (>50% approval)
+- 14-day timelock (to allow users to adjust)
+</Accordion>
+
+## Smart Contract Upgrades
+
+### Upgrade Mechanism
+
+The protocol uses upgradeable proxy contracts with strict governance controls:
+
+<Note>
+**Upgrade Process:**
+
+1. **Proposal:** Detailed upgrade proposal with:
+   - Code changes (diff and full contracts)
+   - Security audit report
+   - Economic impact analysis
+   - Rollback plan
+
+2. **Discussion:** Minimum 14-day discussion period
+
+3. **Voting:** Token vote requiring:
+   - >66% approval
+   - >20% turnout
+   - Separate security council approval
+
+4. **Timelock:** 7-day timelock after approval
+
+5. **Execution:** Upgrade executed, 48-hour monitoring period
+
+6. **Rollback:** Emergency rollback possible within 48 hours
+</Note>
+
+### What Can Be Upgraded
+
+**Upgradeable Components:**
+- Order management logic
+- Matching algorithms
+- Settlement procedures
+- Fee collection mechanisms
+- Reputation calculation logic
+
+**Non-Upgradeable Components:**
+- Core security primitives
+- Proof verification (only through verifier registry)
+- Governance mechanism itself (requires migration)
+- Treasury multi-sig (requires full governance vote)
+
+### Emergency Pause
+
+<Warning>
+**Emergency Pause Powers:**
+
+Limited emergency pause capability exists for critical security situations:
+
+**Scope:**
+- Can pause new order creation
+- Cannot pause existing order settlement
+- Cannot freeze user funds
+- Cannot modify parameters
+
+**Duration:**
+- Maximum 48 hours
+- Automatic unpause after expiry
+- Requires security council multisig
+- Must publish reason within 1 hour
+
+**Accountability:**
+- All emergency actions logged on-chain
+- Post-incident report required within 7 days
+- Governance can revoke pause power if misused
+</Warning>
+
+## Pre-TGE Governance
+
+### Current Structure (Pre-TGE)
+
+Before token launch, the protocol is governed by a multisig council:
+
+**Multisig Council:**
+- 5-of-7 multisig for routine parameter changes
+- 4-of-7 multisig for emergency actions
+- Published member list (see below)
+- All actions transparent on-chain
+
+**Council Members:**
+1. Core protocol developers (2 members)
+2. Security auditors (1 member)
+3. Community representatives (2 members)
+4. Legal/compliance advisor (1 member)
+5. External technical advisor (1 member)
+
+**Published Constraints:**
+- Cannot change fee structure by more than 20% at once
+- Cannot modify limits without risk analysis
+- Cannot add new verifiers without security review
+- All decisions must be publicly justified
+- Emergency actions require post-incident review
+
+<Info>
+**Transparency:**
+
+All multisig addresses, member identities, and action logs are published at [governance.p2p.me/council](https://governance.p2p.me/council)
+</Info>
+
+### Transition Plan
+
+The protocol will progressively decentralize:
+
+**Phase 1 (Current): Multisig Council**
+- 5-of-7 multisig
+- Published members and constraints
+- All actions transparent
+- Community input via forums
+
+**Phase 2 (Post-TGE, Month 1-3): Hybrid Governance**
+- Multisig retains emergency powers
+- Token holders vote on non-critical parameters
+- Gradual handoff of decision-making
+- Education and tooling for governance participation
+
+**Phase 3 (Month 3-6): Token Governance Dominant**
+- Token holders control most parameters
+- Multisig limited to emergency pause only
+- Security council (elected) advises on technical matters
+- Governance delegates emerge
+
+**Phase 4 (Month 6+): Full Decentralization**
+- Complete token-holder control
+- Multisig dissolved or converted to time-delayed executor
+- On-chain governance execution
+- Mature governance practices and culture
+
+## Post-TGE Token Governance
+
+### Governance Token
+
+The protocol token serves as the governance token:
+
+**Voting Power:**
+- 1 token = 1 vote (linear)
+- Optional delegation to governance experts
+- Voting power snapshot at proposal creation
+- No lock requirement for voting (liquid governance)
+
+**Proposal Submission:**
+- Requires 10,000 tokens or 10 delegate endorsements
+- Prevents spam while remaining accessible
+- Exemptions for critical security proposals
+
+### Governance Process
+
+<Steps>
+  <Step title="Temperature Check">
+    Informal discussion on forums to gauge community interest. No formal vote. Duration: 3-7 days.
+  </Step>
+  
+  <Step title="Formal Proposal">
+    Detailed proposal submitted on-chain with all specifications, analysis, and implementation plan. Discussion continues.
+  </Step>
+  
+  <Step title="Voting Period">
+    Token holders vote:
+    - Standard proposals: 5-day voting period
+    - Critical proposals: 7-day voting period
+    - Emergency proposals: 24-hour voting period
+  </Step>
+  
+  <Step title="Timelock">
+    Approved proposals enter timelock:
+    - Parameter changes: 3-day timelock
+    - Contract upgrades: 7-day timelock
+    - Emergency actions: No timelock (if approved via emergency process)
+  </Step>
+  
+  <Step title="Execution">
+    Proposal automatically executes after timelock expires. Any token holder can trigger execution.
+  </Step>
+  
+  <Step title="Monitoring">
+    48-hour monitoring period after execution. Emergency rollback possible if critical issues discovered.
+  </Step>
+</Steps>
+
+### Quorum Requirements
+
+Different proposal types require different quorums:
+
+**Parameter Changes:**
+- Quorum: 10% of tokens
+- Approval: >50% of votes
+
+**Contract Upgrades:**
+- Quorum: 20% of tokens
+- Approval: >66% of votes
+- Security council must approve
+
+**Treasury Spending:**
+- Quorum: 15% of tokens
+- Approval: >50% of votes
+
+**Constitutional Changes:**
+- Quorum: 30% of tokens
+- Approval: >75% of votes
+- Two-stage voting process
+
+### Delegation
+
+Token holders can delegate voting power:
+
+```typescript
+// Delegate voting power
+await governance.delegate(delegateAddress);
+
+// Delegate can vote on behalf of delegators
+// Delegators can reclaim power anytime
+// Delegates cannot transfer delegated tokens
+```
+
+**Delegate Benefits:**
+- Enables passive holders to participate
+- Creates governance experts and accountability
+- Reduces voter apathy
+- Maintains decentralization (delegators can switch)
+
+<Note>
+Delegation is non-custodial. Delegates cannot access or transfer the underlying tokens, only vote with their voting power.
+</Note>
+
+## Treasury Governance
+
+The protocol treasury is governed by token holders:
+
+### Treasury Sources
+
+- Protocol fees (portion allocated to treasury)
+- Token emissions designated for treasury
+- Partnerships and grants
+- Other protocol revenue
+
+### Treasury Usage
+
+**Approved Uses:**
+- Security audits and bug bounties
+- Protocol development grants
+- Liquidity incentives
+- Marketing and growth initiatives
+- Legal and compliance costs
+- Community events and education
+- Emergency reserves
+
+**Spending Process:**
+1. Detailed budget proposal
+2. 7-day discussion period
+3. Token vote (>50% approval, >15% quorum)
+4. Multi-stage disbursement with milestones
+5. Reporting and accountability
+
+<Info>
+**Transparency:**
+
+All treasury transactions are on-chain and tracked at [treasury.p2p.me](https://treasury.p2p.me)
+
+Quarterly financial reports published by treasury committee.
+</Info>
+
+## Governance Tooling
+
+### Voting Interface
+
+- Web interface at [vote.p2p.me](https://vote.p2p.me)
+- Wallet integration for token-based voting
+- Proposal browsing and details
+- Vote delegation interface
+- Historical vote records
+
+### Discussion Platforms
+
+- **Forums:** [forum.p2p.me](https://forum.p2p.me) for detailed discussions
+- **Discord:** Real-time chat for informal discussion
+- **Snapshot:** Off-chain signaling polls
+- **Governance calls:** Weekly community calls
+
+### Governance Analytics
+
+- Proposal success rates
+- Voter participation metrics
+- Delegate performance tracking
+- Treasury spend analysis
+- Parameter change history
+
+## Governance Philosophy
+
+<Note>
+**Guiding Principles:**
+
+1. **Credible neutrality over convenience.** Changes go through transparent governance with guardrails (timelocks, narrow pauses, audits).
+
+2. **Minimize governance where possible:** Parametrize, don't micromanage. Let the protocol run itself where it can.
+
+3. **Public safety valves:** Oracle circuit breakers, verifier sunsets, and emergency pauses with automatic expiry protect users.
+
+4. **Open bounty mindset:** Pay to find flaws early; publish fixes openly. Security through transparency.
+
+5. **Progressive decentralization:** Start with safety training wheels, remove them as the community matures.
+</Note>
+
+## Future Governance Enhancements
+
+### Planned Improvements
+
+<Accordion title="Futarchy Elements">
+Experiment with prediction market governance:
+- Proposals create prediction markets
+- Market participants bet on proposal outcomes
+- Proposals that market predicts will harm value are rejected
+- Adds economic rationality to governance decisions
+</Accordion>
+
+<Accordion title="Specialized Councils">
+Create expert councils for specific domains:
+- Security council for technical decisions
+- Economics council for parameter optimization
+- Regional councils for local compliance
+- Councils elected by token holders
+</Accordion>
+
+<Accordion title="Optimistic Governance">
+For routine decisions:
+- Proposals pass by default after timelock
+- Token holders can veto within window
+- Reduces governance overhead for non-controversial changes
+- Maintains safety through veto power
+</Accordion>
+
+<Accordion title="Cross-Chain Governance">
+As protocol expands to multiple chains:
+- Unified governance across all deployments
+- Cross-chain message passing for execution
+- Chain-specific parameters with global oversight
+- Consistent user experience
+</Accordion>

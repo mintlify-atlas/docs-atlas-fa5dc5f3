@@ -1,0 +1,417 @@
+---
+title: "Privacy Model"
+description: "Data minimization, selective disclosure, and privacy guarantees"
+---
+
+## Core Privacy Principles
+
+P2P Protocol is designed with privacy as a fundamental requirement, not an afterthought. The privacy model ensures that users can transact with confidence that their personal information remains protected while still meeting necessary compliance requirements.
+
+<Info>
+**Privacy Foundation:**
+
+- **Data minimization:** Contracts store only commitments, verdicts, and reputation deltas
+- **Selective disclosure:** ZK-KYC proofs reveal only predicates required for identity verification and compliance tiers
+- **Retention & Access:** Governance-set retention of attestations; no raw PII on-chain
+- **Linkability:** User-facing guidance to avoid unintended linkage across sessions where feasible
+</Info>
+
+## Data Minimization
+
+The protocol operates on the principle of storing the absolute minimum data necessary for functionality.
+
+### What's Stored On-Chain
+
+**Smart Contract Storage:**
+```
+Order {
+  order_id: hash,
+  user_commitment: hash,
+  merchant_commitment: hash,
+  amount: uint256,
+  rail_type: enum,
+  timestamp: uint256,
+  state: enum,
+  reputation_delta: int256
+}
+```
+
+**NOT stored:**
+- User names or identities
+- Wallet addresses linked to real identities
+- Payment account numbers
+- Bank details
+- KYC documents
+- Transaction evidence (except hashes)
+
+### What's Stored Off-Chain
+
+<Accordion title="User Device / Wallet">
+- Private keys
+- ZK proof generation parameters
+- Complete KYC documents (optional local storage)
+- Transaction history details
+- Payment addresses
+
+**Security:** Encrypted at rest, user controls access
+</Accordion>
+
+<Accordion title="Verifier Systems (ZK-KYC Providers)">
+- Minimal identity data required for verification
+- Verification logs (time-limited retention)
+- Proof generation parameters
+
+**Security:** Isolated systems, audited security practices
+**Retention:** Governance-defined limits (typically 90 days)
+</Accordion>
+
+<Accordion title="Client Applications (Coins.me, p2p.me)">
+- User preferences and settings
+- Cached transaction display data
+- Analytics (anonymized)
+
+**Security:** Local storage only, no server-side PII
+**Deletion:** User can clear all client data
+</Accordion>
+
+## Selective Disclosure
+
+ZK-KYC proofs reveal only predicates required for identity verification and compliance tiers. Bank transaction verification is planned (see Section 4.2).
+
+### ZK-KYC Disclosure Levels
+
+<CardGroup cols={2}>
+  <Card title="Tier 1: Basic" icon="shield">
+    **What's Proven:**
+    - User is a unique human (anti-Sybil)
+    - Over 18 years old
+    - Not on sanctions lists
+    
+    **What's Hidden:**
+    - Name, address, date of birth
+    - Document details
+    - Country of residence (optional)
+    
+    **Unlocks:** Up to $500/transaction
+  </Card>
+  
+  <Card title="Tier 2: Standard" icon="shield-halved">
+    **What's Proven:**
+    - Tier 1 predicates +
+    - Resident of permitted jurisdiction
+    - Government ID verification
+    
+    **What's Hidden:**
+    - Specific country (only region revealed)
+    - ID numbers
+    - Full name
+    
+    **Unlocks:** Up to $5,000/transaction
+  </Card>
+  
+  <Card title="Tier 3: Advanced" icon="shield-check">
+    **What's Proven:**
+    - Tier 2 predicates +
+    - Income/source of funds category
+    - Enhanced due diligence completed
+    
+    **What's Hidden:**
+    - Specific income amounts
+    - Employer details
+    - Bank names
+    
+    **Unlocks:** Up to $50,000/transaction
+  </Card>
+  
+  <Card title="Tier 4: Merchant" icon="building">
+    **What's Proven:**
+    - Tier 3 predicates +
+    - Business registration (if applicable)
+    - Liquidity proof
+    
+    **What's Hidden:**
+    - Most details still minimized
+    - Only commitments on-chain
+    
+    **Unlocks:** Merchant privileges
+  </Card>
+</CardGroup>
+
+### Example: Age Verification Circuit
+
+<Note>
+**ZK Circuit for "Over 18" Proof:**
+
+**Inputs (Private):**
+- Date of birth from passport/ID
+- Document signature
+- Issuing authority
+
+**Inputs (Public):**
+- Current date
+- Required age (18)
+- Verifier address
+
+**Output:**
+- TRUE/FALSE: age >= 18
+- Proof commitment hash
+
+**What's revealed:** Only that the user is over 18
+**What's hidden:** Exact age, date of birth, document details
+</Note>
+
+## Planned: Bank Transaction Verification
+
+<Info>
+Future evidence module will extend selective disclosure to payment proofs:
+
+**What will be proven:**
+- A transaction of specific amount occurred
+- Transaction timestamp within valid window
+- Sender/receiver matches order requirements
+
+**What will remain hidden:**
+- Account numbers
+- Bank names
+- Other transactions in account
+- Account balances
+- Personal identifiers
+</Info>
+
+## Retention & Access
+
+### On-Chain Data Retention
+
+**Permanent (by design):**
+- Order commitments (hashes only)
+- Reputation deltas
+- Settlement outcomes
+- Governance decisions
+
+**Why permanent:** Required for protocol function, reputation portability, and dispute history
+
+**Privacy protection:** Only hashes and numeric values, no PII
+
+### Off-Chain Data Retention
+
+<Accordion title="Verifier Systems">
+**Retention Policy:**
+- Verification attempts: 90 days
+- Successful verifications: 1 year
+- Unsuccessful attempts: 30 days
+- Suspicious activity: 2 years (compliance requirement)
+
+**User Rights:**
+- Request deletion after retention period
+- Export personal data
+- Revoke verification (loses associated reputation)
+</Accordion>
+
+<Accordion title="Dispute Evidence">
+**Retention Policy:**
+- Active disputes: Until resolution + appeal period
+- Resolved disputes: 6 months
+- Fraud cases: 2 years
+
+**Access Control:**
+- Only authorized admins/arbitrators
+- Encrypted at rest
+- Audit log of all access
+- Automatic deletion after retention period
+</Accordion>
+
+<Accordion title="Client Applications">
+**Retention Policy:**
+- User choice (local storage)
+- No server-side storage of PII
+- Analytics anonymized and aggregated
+
+**User Control:**
+- Clear cache anytime
+- Export history
+- Opt out of analytics
+</Accordion>
+
+### Data Access Rights
+
+<Warning>
+**Who Can Access What:**
+
+**Users:**
+- Full access to their own data
+- Export capabilities
+- Deletion rights (subject to legal retention)
+
+**Merchants:**
+- Only encrypted payment addresses during active orders
+- No access to user identity data
+
+**Admins (Dispute Resolution):**
+- Access to submitted dispute evidence only
+- Time-limited access
+- Audit trail of all access
+- Cannot access data outside disputes
+
+**Governance:**
+- Aggregate statistics only
+- No individual user data
+- Protocol parameter decisions
+
+**Third Parties:**
+- No access to user data
+- Public blockchain data only (commitments/hashes)
+</Warning>
+
+## Linkability
+
+User-facing guidance to avoid unintended linkage across sessions where feasible.
+
+### Linkability Vectors
+
+<Accordion title="Wallet Address Linkability">
+**Risk:** All orders from same wallet address are linkable
+
+**Mitigation:**
+- User guidance to use separate wallets for privacy
+- Support for wallet rotation
+- ZK-proof linking to new wallet while preserving reputation
+
+**Future:** Anonymous reputation credentials that can be proven without revealing wallet
+</Accordion>
+
+<Accordion title="Transaction Timing">
+**Risk:** Unique transaction timing patterns may identify users
+
+**Mitigation:**
+- Batched order submission (coming)
+- Randomized settlement times
+- User guidance on timing privacy
+
+**Note:** Some linkability inevitable for reputation system
+</Accordion>
+
+<Accordion title="Amount Patterns">
+**Risk:** Distinctive transaction amounts may be identifying
+
+**Mitigation:**
+- Round number suggestions
+- Privacy-preserving amount ranges
+- User education
+
+**Tradeoff:** Exact amounts required for fiat transfers
+</Accordion>
+
+<Accordion title="Cross-Rail Correlation">
+**Risk:** Using same payment rail repeatedly creates patterns
+
+**Mitigation:**
+- Encourage rail diversity
+- No requirement to use same rail
+- Payment details encrypted per-order
+
+**Benefit:** Rail diversity also improves reputation
+</Accordion>
+
+### Privacy Best Practices (User Guidance)
+
+<Note>
+**Recommended Practices:**
+
+1. **Use separate wallets** for different contexts if privacy important
+2. **Vary transaction amounts** to avoid patterns
+3. **Don't reuse** the same payment accounts unnecessarily
+4. **Be aware** that reputation tracking requires some linkability
+5. **Use fresh addresses** for receiving crypto when possible
+6. **Consider timing** of transactions if correlation is a concern
+</Note>
+
+## Privacy vs. Compliance
+
+The protocol navigates the tension between privacy and compliance through:
+
+### Programmable Compliance
+
+- **Minimal disclosure:** Prove only what regulations require
+- **Tiered verification:** Higher compliance for higher limits
+- **Selective revelation:** Reveal to counterparties only when needed
+- **Jurisdiction-aware:** Different rules for different regions
+
+### Travel Rule Compatibility (Planned)
+
+For transactions involving regulated entities:
+
+```
+IF (counterparty.isRegulatedEntity AND amount > threshold) {
+  REQUIRE: selective_disclosure_to_counterparty({
+    name: encrypted_to_counterparty,
+    jurisdiction: revealed,
+    amount: visible
+  })
+} ELSE {
+  REQUIRE: minimal_disclosure()
+}
+```
+
+<Info>
+This enables compliance where legally required without compromising privacy for peer-to-peer transactions between individuals.
+</Info>
+
+## Privacy Guarantees
+
+### What We Guarantee
+
+<CardGroup cols={2}>
+  <Card title="No PII On-Chain" icon="database">
+    Never will user names, addresses, documents, or raw identity data be stored on public blockchains.
+  </Card>
+  
+  <Card title="Cryptographic Protection" icon="lock">
+    All proofs use zero-knowledge cryptography. Verification reveals only the predicate, not the data.
+  </Card>
+  
+  <Card title="User Control" icon="user-shield">
+    Users decide what to verify, when to disclose, and can export or delete data within legal limits.
+  </Card>
+  
+  <Card title="No Selling Data" icon="ban">
+    Protocol will never sell user data. Revenue comes from transaction fees, not data monetization.
+  </Card>
+</CardGroup>
+
+### What We Cannot Guarantee
+
+<Warning>
+**Inherent Limitations:**
+
+1. **Blockchain permanence:** Commitments on-chain are permanent
+2. **Reputation linkability:** Reputation system requires some transaction linkage
+3. **Counterparty knowledge:** Matched merchant knows payment address during order
+4. **Legal requirements:** May be required to disclose data by court order
+5. **Network analysis:** Sophisticated chain analysis may reveal patterns
+6. **User mistakes:** Cannot protect against user self-doxxing
+</Warning>
+
+## Privacy Roadmap
+
+### Near-Term
+
+- Launch with current ZK-KYC selective disclosure
+- Publish privacy best practices guide
+- Implement encrypted messaging for order coordination
+
+### Medium-Term
+
+- Bank transaction ZK proofs
+- Enhanced wallet privacy features
+- Anonymous reputation credentials (research)
+
+### Long-Term
+
+- Fully anonymous credibility system
+- ZK-rollup for order privacy
+- Decentralized identity integration (DID)
+- Quantum-resistant privacy primitives
+
+<Note>
+Privacy technology evolves rapidly. The protocol commits to adopting privacy-enhancing technologies as they mature while maintaining security and compliance requirements.
+</Note>

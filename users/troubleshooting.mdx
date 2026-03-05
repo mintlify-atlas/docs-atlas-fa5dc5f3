@@ -1,0 +1,112 @@
+---
+title: "Troubleshooting"
+description: "Solutions to common issues you may encounter"
+---
+
+## Common Issues and Solutions
+
+Here are solutions to the most common problems users encounter on P2P Protocol:
+
+<AccordionGroup>
+  <Accordion title="Order was cancelled unexpectedly" icon="circle-xmark">
+    If your order was cancelled without you initiating it:
+    
+    **Possible causes:**
+    - The order expired due to inactivity or timeout
+    - A transfer step failed (insufficient balance, wrong details, etc.)
+    - Merchant cancelled due to eligibility changes
+    
+    **Solutions:**
+    - Check whether the order expired or a transfer step failed
+    - Review the cancellation reason in the app if provided
+    - Recreate the order with correct details
+    - Complete all required steps promptly to avoid timeout
+    - Verify your stablecoin balance and approvals before placing new SELL/PAY orders
+  </Accordion>
+  
+  <Accordion title="Merchant not responding" icon="user-slash">
+    If your assigned merchant is not responding or taking action:
+    
+    **What to do:**
+    - Wait for the protocol reassignment or timeout path where applicable
+    - The protocol has built-in mechanisms to handle unresponsive merchants
+    - Check the estimated timeout period in the app
+    - If conditions are met (time window passed, clear evidence of non-response), raise a dispute with evidence
+    - Document all attempts to contact or prompt the merchant
+    
+    <Warning>
+      Do not send payment outside the app or use alternative payment methods if a merchant requests it.
+    </Warning>
+  </Accordion>
+  
+  <Accordion title="Transfer failed" icon="triangle-exclamation">
+    If a stablecoin transfer or payment confirmation failed:
+    
+    **For SELL/PAY orders (stablecoin transfer failed):**
+    - Confirm you have sufficient token balance in your wallet
+    - Check if token approval is required and complete it
+    - Verify network connectivity and try again
+    - Check if the smart contract address is correct
+    
+    **For BUY orders (fiat payment issues):**
+    - Confirm the payment rail details are correct
+    - Verify you used the exact payment information provided in the app
+    - Complete all required payment confirmation steps
+    - Check with your bank or payment provider for any restrictions
+    - Ensure you have sufficient balance in your fiat account
+  </Accordion>
+  
+  <Accordion title="Cannot place order" icon="ban">
+    If you're unable to create a new order:
+    
+    **Check the following:**
+    - Account status: Verify your account is active and verified
+    - Balance: Ensure sufficient stablecoin balance for SELL/PAY orders
+    - Limits: Check if you've reached any daily or transaction limits
+    - Supported regions: Confirm the payment rail is supported in your region
+    - App version: Update to the latest version of the client app
+    - Network issues: Verify your internet connection is stable
+  </Accordion>
+  
+  <Accordion title="Stablecoins not received" icon="coins">
+    If you completed a BUY order but haven't received stablecoins:
+    
+    **Steps to take:**
+    - Check your order status in the app - it should show `COMPLETED`
+    - Verify you're looking at the correct wallet address
+    - Refresh your wallet balance (it may take a few moments to update)
+    - Check the blockchain explorer with your transaction hash
+    - If the order is still in `PAID` or earlier status, wait for completion
+    - If order shows `COMPLETED` but no stablecoins received, contact support immediately
+  </Accordion>
+  
+  <Accordion title="Fiat payment not received" icon="money-bill">
+    If you completed a SELL order but haven't received fiat:
+    
+    **Steps to take:**
+    - Check your order status - it should show `COMPLETED`
+    - Verify the payment details you provided were correct
+    - Check your bank account or payment rail account (may take time to process)
+    - Note that different payment rails have different processing times
+    - If order shows `COMPLETED` but payment not received after the expected timeframe, open a dispute
+    - Gather evidence: transaction receipts, order details, communication with merchant
+  </Accordion>
+</AccordionGroup>
+
+## Still Need Help?
+
+If you've tried the solutions above and still experiencing issues:
+
+<Steps>
+  <Step title="Check order details">
+    Review your complete order history and status in the app.
+  </Step>
+  
+  <Step title="Use in-app support">
+    Access the support or help section in the client app.
+  </Step>
+  
+  <Step title="Consider dispute">
+    If the issue involves merchant non-performance, check if you're eligible to open a dispute.
+  </Step>
+</Steps>

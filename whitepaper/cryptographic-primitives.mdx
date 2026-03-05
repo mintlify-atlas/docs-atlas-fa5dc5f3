@@ -1,0 +1,91 @@
+---
+title: "Cryptographic Primitives & Proof Integration"
+description: "ZK proofs, identity verification, and evidence modules"
+---
+
+## Identity Verification (Live)
+
+P2P Protocol uses ZK proofs for privacy-preserving identity verification. A new member can perform trustless KYC by sharing a ZK proof of their identity—keeping their personal data private while building on-chain reputation and unlocking higher transaction limits without revealing raw PII on-chain.
+
+<Info>
+**Current ZK-KYC Methods:**
+
+The protocol currently supports identity verification through multiple ZK-based methods:
+
+- **Government ID verification** via on-chain ZK proof verifiers for supported identity documents.
+- **Social account verification** via **Reclaim Protocol** [1], which uses zkTLS proofs to verify ownership and standing of social accounts (e.g., professional networks, developer platforms, social media) without exposing account credentials or personal data.
+- **Passport verification** via ZK proof systems that can verify age, nationality, and sanctions status without disclosing document contents.
+</Info>
+
+Each successful verification strengthens the user's on-chain reputation and expands their transaction capacity within the protocol.
+
+### How ZK-KYC Works
+
+When a user completes identity verification:
+
+1. They generate a zero-knowledge proof using their identity document or account credentials
+2. The proof demonstrates that they meet specific criteria (age, jurisdiction, sanctions status) without revealing the underlying data
+3. The proof is verified on-chain or by a trusted verifier
+4. A commitment or attestation hash is recorded on-chain
+5. The user's reputation score and transaction limits are updated accordingly
+
+The raw identity data never leaves the user's device or verifier system. Only the cryptographic proof of compliance is shared.
+
+## Evidence Module for Bank Transaction Verification (Roadmap)
+
+<Note>
+A planned evidence module will extend the protocol's ZK capabilities to bank transaction verification for on-chain dispute resolution. This module will leverage TLS-backed proofs so that a user or merchant can produce a cryptographic witness that a specific statement about a bank transfer or payment receipt is true—without exposing credentials or transaction details.
+</Note>
+
+The planned module will specify where proofs are verified:
+
+- **On-chain verifier** for compact claims and attestation hashes.
+- **Off-chain verifier/relayer** (open-source reference) for complex or rail-specific statements, posting a succinct attestation back on-chain.
+
+<Warning>
+Raw proofs will remain with users; the chain stores only minimal commitments and verdicts.
+</Warning>
+
+### Planned Evidence Capabilities
+
+The roadmap evidence module will enable:
+
+- **Payment confirmation proofs:** cryptographically prove a fiat transfer occurred without sharing bank credentials
+- **Amount verification:** attest to transfer amounts matching order requirements
+- **Timestamp proofs:** verify transactions occurred within protocol time windows
+- **Account ownership:** prove control of payment accounts without exposing account numbers
+
+These capabilities will enable more automated dispute resolution while preserving privacy.
+
+## Privacy Properties
+
+The current ZK-KYC implementation provides:
+
+- **Non-interactive disclosure:** share only the proof, not the underlying data.
+- **Selective reveal:** only fields required by the verification circuit are exposed to the circuit.
+- **Bounded linkage:** protocol IDs and commitments minimize cross-session linkability where feasible.
+
+The planned evidence module will extend these privacy properties to bank transaction verification.
+
+### Privacy Guarantees
+
+<Accordion title="Non-Interactive Disclosure">
+Users generate proofs independently without real-time interaction with verifiers. This enables asynchronous verification and reduces coordination requirements.
+</Accordion>
+
+<Accordion title="Selective Reveal">
+Only the specific predicates required for verification (e.g., "over 18 years old" or "resident of permitted jurisdiction") are proven. Additional information in documents remains hidden.
+</Accordion>
+
+<Accordion title="Bounded Linkage">
+The protocol minimizes the ability to link a user's transactions across different sessions or contexts. While some linkability is necessary for reputation tracking, it is bounded to what's essential for the protocol's operation.
+</Accordion>
+
+## Cryptographic Foundations
+
+The protocol relies on established cryptographic primitives:
+
+- **zkSNARKs/zkSTARKs** for identity and compliance proofs
+- **TLS proof systems** (planned) for bank transaction verification
+- **Commitment schemes** for storing attestations on-chain without revealing data
+- **Threshold encryption** for secure payment address exchange between matched parties
