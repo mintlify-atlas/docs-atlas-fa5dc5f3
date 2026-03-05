@@ -1,0 +1,236 @@
+{
+  "projectType": "general",
+  "projectName": "P2P Foundation",
+  "projectDescription": "Decentralized peer-to-peer protocol for privacy-preserving fiat-to-crypto on/off-ramps using zero-knowledge proofs and proof-of-credibility reputation.",
+  "theme": "palm",
+  "primaryColor": "#7C3AED",
+  "lightColor": "#A78BFA",
+  "darkColor": "#6D28D9",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Whitepaper",
+            "pages": [
+              "whitepaper/abstract",
+              "whitepaper/vision",
+              "whitepaper/design-goals",
+              "whitepaper/system-overview",
+              "whitepaper/cryptographic-primitives",
+              "whitepaper/trade-protocol",
+              "whitepaper/proof-of-credibility",
+              "whitepaper/fraud-prevention",
+              "whitepaper/dispute-resolution",
+              "whitepaper/pricing-oracle",
+              "whitepaper/liquidity-market-design",
+              "whitepaper/security-model",
+              "whitepaper/privacy-model",
+              "whitepaper/compliance",
+              "whitepaper/accessing-protocol",
+              "whitepaper/governance",
+              "whitepaper/token-economics",
+              "whitepaper/disclosures-risks",
+              "whitepaper/references",
+              "whitepaper/appendices"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "For Investors",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "investors/start-here",
+              "investors/thesis",
+              "investors/why-token-exists"
+            ]
+          },
+          {
+            "group": "Tokenomics",
+            "pages": [
+              "investors/token-details",
+              "investors/token-utility",
+              "investors/token-allocation",
+              "investors/metadao-sale",
+              "investors/vesting-schedules",
+              "investors/treasury-token-value",
+              "investors/staking-mechanics"
+            ]
+          },
+          {
+            "group": "Governance & Risk",
+            "pages": [
+              "investors/token-holder-governance",
+              "investors/progressive-decentralization",
+              "investors/insurance",
+              "investors/financials-estimates",
+              "investors/disclosures"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "investors/faq",
+              "investors/why-base-chain"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "For Builders",
+        "groups": [
+          {
+            "group": "Technical Documentation",
+            "pages": [
+              "builders/start-here",
+              "builders/roles-permissions",
+              "builders/protocol-parameters",
+              "builders/disputes",
+              "builders/reputation",
+              "builders/contract-references"
+            ]
+          },
+          {
+            "group": "Expansion & Roadmap",
+            "pages": [
+              "builders/fiat-to-fiat-remittance",
+              "builders/global-currency-expansion",
+              "builders/rollout-sequence"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "builders/faq"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "For Merchants",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "merchants/start-here",
+              "merchants/readiness",
+              "merchants/setup-flow"
+            ]
+          },
+          {
+            "group": "Operations",
+            "pages": [
+              "merchants/handling-orders",
+              "merchants/operational-controls",
+              "merchants/circles-of-trust",
+              "merchants/payment-channels-country-controls",
+              "merchants/order-assignment"
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              "merchants/disputes",
+              "merchants/delegation-revenue-sharing",
+              "merchants/insurance",
+              "merchants/risk-reliability-practices"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "merchants/troubleshooting",
+              "merchants/faq"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "For Users",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "users/start-here",
+              "users/before-you-start",
+              "users/order-types"
+            ]
+          },
+          {
+            "group": "Using the Platform",
+            "pages": [
+              "users/how-to-place-order",
+              "users/what-to-do-by-order-type",
+              "users/understanding-order-states"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "users/disputes-evidence",
+              "users/troubleshooting",
+              "users/faq"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Community",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "community/start-here",
+              "community/cypherpunk-manifesto",
+              "community/hierarchy"
+            ]
+          },
+          {
+            "group": "Contribution",
+            "pages": [
+              "community/four-tracks",
+              "community/how-to-join",
+              "community/weekly-updates-offboarding",
+              "community/remuneration"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "community/discord-structure",
+              "community/principles",
+              "community/faq"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Non-custodial peer-to-peer fiat-to-crypto trading",
+    "Zero-knowledge proof based privacy-preserving KYC",
+    "Proof-of-credibility reputation system",
+    "On-chain dispute resolution",
+    "Multi-audience documentation (investors, builders, merchants, users, community)",
+    "Token governance and staking mechanics"
+  ],
+  "publicApiSurface": [
+    "Whitepaper sections (Abstract, Vision, Design Goals, System Overview, etc.)",
+    "Investor documentation (Token Economics, MetaDAO Sale, Staking, Governance)",
+    "Builder documentation (Roles & Permissions, Protocol Parameters, Contract References)",
+    "Merchant guides (Setup Flow, Order Handling, Circles of Trust, Disputes)",
+    "User guides (Order Types, Placing Orders, Order States, Disputes)",
+    "Community resources (Manifesto, Hierarchy, Contribution Tracks, Remuneration)"
+  ]
+}
